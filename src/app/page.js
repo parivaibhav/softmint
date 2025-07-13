@@ -1,5 +1,6 @@
-import Image from "next/image";
+"use client";
 
+import Image from "next/image";
 import { Zap, Smartphone, Palette } from 'lucide-react';
 
 export default function Home() {
@@ -12,19 +13,19 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Welcome to{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                NextApp
+                SoftMint
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              A modern, responsive web application built with Next.js and Tailwind CSS. 
-              Experience the perfect blend of performance and beautiful design.
+              We craft exceptional digital experiences that transform businesses. From cutting-edge web applications 
+              to innovative mobile solutions, we bring your vision to life with modern technologies and creative design.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
-                Get Started
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg" onClick={() => window.location.href = '/contact'}>
+                Start Your Project
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-blue-600 hover:text-blue-600 transition-all duration-200">
-                Learn More
+              <button className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-blue-600 hover:text-blue-600 transition-all duration-200" onClick={() => window.location.href = '/services'}>
+                Explore Services
               </button>
             </div>
           </div>
@@ -41,10 +42,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Why Choose NextApp?
+              Why Choose SoftMint?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Built with modern technologies and best practices for optimal performance and user experience.
+              We combine technical excellence with creative innovation to deliver solutions that exceed expectations.
             </p>
           </div>
           
@@ -54,7 +55,7 @@ export default function Home() {
                 <Zap className="w-8 h-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Lightning Fast</h3>
-              <p className="text-gray-600">Optimized for speed with Next.js and modern build tools.</p>
+              <p className="text-gray-600">Optimized for speed with Next.js and modern build tools for exceptional performance.</p>
             </div>
             
             <div className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow duration-200">
@@ -62,7 +63,7 @@ export default function Home() {
                 <Smartphone className="w-8 h-8 text-purple-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Responsive Design</h3>
-              <p className="text-gray-600">Perfect on all devices with Tailwind CSS responsive utilities.</p>
+              <p className="text-gray-600">Perfect on all devices with Tailwind CSS responsive utilities and mobile-first approach.</p>
             </div>
             
             <div className="text-center p-6 rounded-lg hover:shadow-lg transition-shadow duration-200">
@@ -70,7 +71,7 @@ export default function Home() {
                 <Palette className="w-8 h-8 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Modern Stack</h3>
-              <p className="text-gray-600">Built with the latest technologies and best practices.</p>
+              <p className="text-gray-600">Built with the latest technologies and best practices for scalable, maintainable solutions.</p>
             </div>
           </div>
         </div>
