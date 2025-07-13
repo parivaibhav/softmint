@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -10,19 +11,159 @@ export default function Contact() {
     message: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
+
+  // Validation rules
+  const validationRules = {
+    name: {
+      required: true,
+      minLength: 2,
+      maxLength: 50,
+      pattern: /^[a-zA-Z\s]+$/
+    },
+    email: {
+      required: true,
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    },
+    subject: {
+      required: true,
+      minLength: 5,
+      maxLength: 100
+    },
+    message: {
+      required: true,
+      minLength: 10,
+      maxLength: 1000
+    }
   };
 
-  const handleSubmit = (e) => {
+  // Validation function
+  const validateField = (name, value) => {
+    const rules = validationRules[name];
+    const fieldErrors = [];
+
+    if (rules.required && !value.trim()) {
+      fieldErrors.push(`${name.charAt(0).toUpperCase() + name.slice(1)} is required`);
+    }
+
+    if (value.trim() && rules.minLength && value.trim().length < rules.minLength) {
+      fieldErrors.push(`${name.charAt(0).toUpperCase() + name.slice(1)} must be at least ${rules.minLength} characters`);
+    }
+
+    if (rules.maxLength && value.trim().length > rules.maxLength) {
+      fieldErrors.push(`${name.charAt(0).toUpperCase() + name.slice(1)} must be less than ${rules.maxLength} characters`);
+    }
+
+    if (rules.pattern && !rules.pattern.test(value)) {
+      if (name === 'email') {
+        fieldErrors.push('Please enter a valid email address');
+      } else if (name === 'name') {
+        fieldErrors.push('Name can only contain letters and spaces');
+      }
+    }
+
+    return fieldErrors;
+  };
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: []
+      }));
+    }
+  };
+
+  // Handle input blur (when user leaves a field)
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({
+      ...prev,
+      [name]: true
+    }));
+
+    const fieldErrors = validateField(name, value);
+    setErrors(prev => ({
+      ...prev,
+      [name]: fieldErrors
+    }));
+  };
+
+  // Validate all fields
+  const validateForm = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    Object.keys(validationRules).forEach(field => {
+      const fieldErrors = validateField(field, formData[field]);
+      newErrors[field] = fieldErrors;
+      if (fieldErrors.length > 0) {
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! We will get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    
+    // Mark all fields as touched
+    setTouched({
+      name: true,
+      email: true,
+      subject: true,
+      message: true
+    });
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Success
+      setSubmitStatus('success');
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setTouched({});
+      setErrors({});
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 5000);
+      
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Check if form is valid
+  const isFormValid = () => {
+    return Object.keys(validationRules).every(field => {
+      const fieldErrors = validateField(field, formData[field]);
+      return fieldErrors.length === 0;
+    });
   };
 
   return (
@@ -58,6 +199,28 @@ export default function Contact() {
               <h2 className="text-3xl font-bold text-gray-900 mb-8">
                 Send us a Message
               </h2>
+
+              {/* Success/Error Messages */}
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
+                  <FaCheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="text-sm font-medium text-green-800">Message sent successfully!</h3>
+                    <p className="text-sm text-green-700">We'll get back to you within 24 hours.</p>
+                  </div>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
+                  <FaExclamationTriangle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                  <div>
+                    <h3 className="text-sm font-medium text-red-800">Something went wrong</h3>
+                    <p className="text-sm text-red-700">Please try again or contact us directly.</p>
+                  </div>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
@@ -73,11 +236,21 @@ export default function Contact() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
+                      onBlur={handleBlur}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-black ${
+                        touched.name && errors.name?.length > 0
+                          ? 'border-red-300 bg-red-50'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
                       placeholder="John Doe"
                     />
+                    {touched.name && errors.name?.length > 0 && (
+                      <div className="mt-1 text-sm text-red-600">
+                        {errors.name[0]}
+                      </div>
+                    )}
                   </div>
+
                   <div>
                     <label
                       htmlFor="email"
@@ -91,10 +264,19 @@ export default function Contact() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
+                      onBlur={handleBlur}
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-black ${
+                        touched.email && errors.email?.length > 0
+                          ? 'border-red-300 bg-red-50'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
                       placeholder="john@example.com"
                     />
+                    {touched.email && errors.email?.length > 0 && (
+                      <div className="mt-1 text-sm text-red-600">
+                        {errors.email[0]}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -108,13 +290,22 @@ export default function Contact() {
                   <input
                     type="text"
                     id="subject"
-                    name="subject"
+                    name="subject"    
                     value={formData.subject}
                     onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
+                    onBlur={handleBlur}
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-black ${
+                      touched.subject && errors.subject?.length > 0
+                        ? 'border-red-300 bg-red-50'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
                     placeholder="Project Inquiry"
                   />
+                  {touched.subject && errors.subject?.length > 0 && (
+                    <div className="mt-1 text-sm text-red-600">
+                      {errors.subject[0]}
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -129,18 +320,42 @@ export default function Contact() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    required
+                    onBlur={handleBlur}
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none hover:border-gray-400"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none text-black ${
+                      touched.message && errors.message?.length > 0
+                        ? 'border-red-300 bg-red-50'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
                     placeholder="Tell us about your project..."
                   ></textarea>
+                  {touched.message && errors.message?.length > 0 && (
+                    <div className="mt-1 text-sm text-red-600">
+                      {errors.message[0]}
+                    </div>
+                  )}
+                  <div className="mt-1 text-sm text-gray-500 text-right">
+                    {formData.message.length}/1000 characters
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
+                  disabled={isSubmitting || !isFormValid()}
+                  className={`w-full py-3 rounded-lg font-medium transition-all duration-200 transform ${
+                    isSubmitting || !isFormValid()
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 hover:scale-105 shadow-lg'
+                  }`}
                 >
-                  Send Message
+                  {isSubmitting ? (
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Sending...</span>
+                    </div>
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
             </div>
@@ -161,25 +376,7 @@ export default function Contact() {
               <div className="space-y-8">
                 <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
+                    <FaMapMarkerAlt className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">
@@ -197,109 +394,57 @@ export default function Contact() {
 
                 <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
+                    <FaEnvelope className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">
                       Email Us
                     </h3>
                     <p className="text-gray-600">
-                      hello@nextapp.com
+                      vaibhavgoswami055@gmail.com
                       <br />
-                      support@nextapp.com
+                      support@softmint.com
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                   <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
+                    <FaPhone className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">
                       Call Us
                     </h3>
                     <p className="text-gray-600">
-                      +1 (555) 123-4567
+                      +91 8799064890
                       <br />
                       +1 (555) 987-6543
                     </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Business Hours */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-blue-100">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Business Hours
-                </h3>
-                <div className="space-y-2 text-gray-600">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday</span>
-                    <span>9:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span>10:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
-                    <span>Closed</span>
+                {/* Business Hours */}
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-blue-100">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Business Hours
+                  </h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex justify-between">
+                      <span>Monday - Friday</span>
+                      <span>9:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Saturday</span>
+                      <span>10:00 AM - 4:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday</span>
+                      <span>Closed</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Visit our office or get in touch with us through any of the
-              contact methods above.
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-            <div className="w-full h-96 rounded-lg overflow-hidden border border-gray-200">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3712.1835705452504!2d70.42281117526976!3d21.50052848026946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3957ff6750a83db3%3A0xddcb24c789dd4e75!2sAvadh%20Web!5e0!3m2!1sen!2sin!4v1752384819604!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: "0" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Office Location"
-              ></iframe>
             </div>
           </div>
         </div>

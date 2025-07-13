@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Twitter, Linkedin, Github, MapPin, Mail, Phone } from 'lucide-react';
+import { FaTwitter, FaLinkedin, FaGithub, FaMapMarkerAlt, FaEnvelope, FaPhone } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -10,9 +10,9 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">N</span>
+                <span className="text-white font-bold text-sm">S</span>
               </div>
-              <span className="text-xl font-bold">NextApp</span>
+              <span className="text-xl font-bold">SoftMint</span>
             </div>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Building innovative web solutions with modern technologies. We
@@ -23,19 +23,19 @@ export default function Footer() {
                 href="#"
                 className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
               >
-                <Twitter className="w-6 h-6" />
+                <FaTwitter className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
               >
-                <Linkedin className="w-6 h-6" />
+                <FaLinkedin className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
               >
-                <Github className="w-6 h-6" />
+                <FaGithub className="w-6 h-6" />
               </a>
               <a
                 href="#"
@@ -97,7 +97,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#"
+                  href="/services/web-development"
                   className="text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   Web Development
@@ -105,7 +105,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/services/mobile-development"
                   className="text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   Mobile Development
@@ -113,7 +113,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/services/ui-ux-design"
                   className="text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   UI/UX Design
@@ -121,7 +121,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/services/cloud-solutions"
                   className="text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   Cloud Solutions
@@ -135,14 +135,14 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                <FaMapMarkerAlt className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-gray-400">123 Business Street</p>
                   <p className="text-gray-400">Tech City, TC 12345</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                <FaEnvelope className="w-5 h-5 text-blue-500 flex-shrink-0" />
                 <a
                   href="mailto:vaibhavgoswami055@gmail.com"
                   className="text-gray-400 hover:text-white transition-colors duration-200"
@@ -151,7 +151,7 @@ export default function Footer() {
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-blue-500 flex-shrink-0" />
+                <FaPhone className="w-5 h-5 text-blue-500 flex-shrink-0" />
                 <a
                   href="tel:+918799064890"
                   className="text-gray-400 hover:text-white transition-colors duration-200"

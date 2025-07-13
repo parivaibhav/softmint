@@ -24,3 +24,196 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Custom animations for navbar */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  25% { 
+    transform: translateY(-8px) rotate(90deg); 
+  }
+  50% { 
+    transform: translateY(-4px) rotate(180deg); 
+  }
+  75% { 
+    transform: translateY(-12px) rotate(270deg); 
+  }
+}
+
+@keyframes slide {
+  0% { 
+    transform: translateX(-100%); 
+  }
+  100% { 
+    transform: translateX(100%); 
+  }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: scale(1.2); 
+  }
+}
+
+@keyframes rotate {
+  0% { 
+    transform: rotate(0deg); 
+  }
+  100% { 
+    transform: rotate(360deg); 
+  }
+}
+
+/* Animation classes */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+.animate-slide {
+  animation: slide 12s linear infinite;
+}
+
+.animate-slide-reverse {
+  animation: slide 15s linear infinite reverse;
+}
+
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+.animate-glow-slow {
+  animation: glow 6s ease-in-out infinite;
+}
+
+.animate-rotate-slow {
+  animation: rotate 10s linear infinite;
+}
+
+/* Logo animations */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes text-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes logo-bounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.animate-text-gradient {
+  background-size: 200% 200%;
+  animation: text-gradient 4s ease infinite;
+}
+
+.animate-logo-bounce {
+  animation: logo-bounce 2s ease-in-out infinite;
+}
+
+/* Responsive animations */
+@media (max-width: 640px) {
+  .animate-text-gradient {
+    animation-duration: 3s;
+  }
+  
+  .animate-logo-bounce {
+    animation-duration: 1.5s;
+  }
+  
+  .animate-gradient-shift {
+    animation-duration: 2s;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .animate-text-gradient {
+    animation-duration: 3.5s;
+  }
+  
+  .animate-logo-bounce {
+    animation-duration: 1.8s;
+  }
+  
+  .animate-gradient-shift {
+    animation-duration: 2.5s;
+  }
+}
+
+@media (min-width: 1025px) {
+  .animate-text-gradient {
+    animation-duration: 4s;
+  }
+  
+  .animate-logo-bounce {
+    animation-duration: 2s;
+  }
+  
+  .animate-gradient-shift {
+    animation-duration: 3s;
+  }
+}
+
+/* Blob animations */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}

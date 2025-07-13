@@ -10,7 +10,7 @@ export default function About() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               About{" "}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                NextApp
+               SoftMint
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
@@ -31,25 +31,14 @@ export default function About() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Image */}
             <div className="relative">
-              <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg
-                      className="w-12 h-12 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-gray-600 font-medium">Our Office</p>
-                </div>
+              <div className="w-full h-96 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1646215993421-5151435c78dc?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGl0JTIwY29tcGFueSUyMG9mZmljZXxlbnwwfHwwfHx8Mg%3D%3D"
+                  alt="Our Office"
+                  width={400}
+                  height={400}
+                  className="rounded-2xl object-cover w-full h-full"
+                />
               </div>
             </div>
 
@@ -194,7 +183,7 @@ export default function About() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Image
+                <Image
                   src="https://randomuser.me/api/portraits/men/34.jpg"
                   alt="Jane Smith"
                   width={128}
@@ -232,7 +221,7 @@ export default function About() {
 
             <div className="text-center">
               <div className="w-32 h-32 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Image
+                <Image
                   src="https://randomuser.me/api/portraits/men/34.jpg"
                   alt="Jane Smith"
                   width={128}

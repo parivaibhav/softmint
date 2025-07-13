@@ -1,48 +1,91 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
-  Code, Zap, Server, FileText, Database, Smartphone, Cloud, Palette, Eye, Sparkles, Layers, Box, Cpu, Wrench, Target, TrendingUp, Shield, CheckCircle, Archive, Lock 
-} from 'lucide-react';
+  SiReact, 
+  SiNextdotjs, 
+  SiNodedotjs, 
+  SiTypescript, 
+  SiMongodb, 
+  SiPostgresql,
+  SiFlutter,
+  SiSwift,
+  SiKotlin,
+  SiFirebase,
+  SiFigma,
+  SiSketch,
+  SiAdobexd,
+  SiInvision,
+  SiFramer,
+  SiGooglecloud,
+  SiDocker,
+  SiKubernetes,
+  SiTerraform,
+  SiGithub,
+  SiGit,
+  SiVercel
+} from 'react-icons/si';
+import { 
+  FaEye, 
+  FaLayers, 
+  FaBox, 
+  FaCog, 
+  FaWrench, 
+  FaShieldAlt, 
+  FaCheckCircle, 
+  FaArchive, 
+  FaLock, 
+  FaArrowRight, 
+  FaStar, 
+  FaUsers, 
+  FaClock, 
+  FaAward,
+  FaPalette,
+  FaMobile,
+  FaCloud,
+  FaBullseye,
+  FaChartLine,
+  FaMagic
+} from 'react-icons/fa';
 
 // Technology to icon mapping
 const technologyIcons = {
   // Web Development
-  'React': Code,
-  'Next.js': Zap,
-  'Node.js': Server,
-  'TypeScript': FileText,
-  'MongoDB': Database,
-  'PostgreSQL': Database,
+  'React': SiReact,
+  'Next.js': SiNextdotjs,
+  'Node.js': SiNodedotjs,
+  'TypeScript': SiTypescript,
+  'MongoDB': SiMongodb,
+  'PostgreSQL': SiPostgresql,
   // Mobile Development
-  'React Native': Smartphone,
-  'Flutter': Smartphone,
-  'Swift': Code,
-  'Kotlin': Code,
-  'Firebase': Cloud,
-  'AWS': Cloud,
+  'React Native': FaMobile,
+  'Flutter': SiFlutter,
+  'Swift': SiSwift,
+  'Kotlin': SiKotlin,
+  'Firebase': SiFirebase,
+  'AWS': FaCloud,
   // UI/UX Design
-  'Figma': Palette,
-  'Sketch': Palette,
-  'Adobe XD': Palette,
-  'InVision': Eye,
-  'Principle': Sparkles,
-  'Framer': Layers,
+  'Figma': SiFigma,
+  'Sketch': SiSketch,
+  'Adobe XD': SiAdobexd,
+  'InVision': SiInvision,
+  'Principle': FaMagic,
+  'Framer': SiFramer,
   // Cloud Solutions
-  'Azure': Cloud,
-  'Google Cloud': Cloud,
-  'Docker': Box,
-  'Kubernetes': Cpu,
-  'Terraform': Wrench,
+  'Azure': FaCloud,
+  'Google Cloud': SiGooglecloud,
+  'Docker': SiDocker,
+  'Kubernetes': SiKubernetes,
+  'Terraform': SiTerraform,
   // Consulting
-  'Architecture Patterns': Target,
-  'Performance Tools': TrendingUp,
-  'Security Frameworks': Shield,
-  'Best Practices': CheckCircle,
+  'Architecture Patterns': FaBullseye,
+  'Performance Tools': FaChartLine,
+  'Security Frameworks': FaShieldAlt,
+  'Best Practices': FaCheckCircle,
   // Maintenance
-  'Monitoring Tools': Eye,
-  'Backup Systems': Archive,
-  'Security Tools': Lock,
-  'Update Management': Wrench
+  'Monitoring Tools': FaEye,
+  'Backup Systems': FaArchive,
+  'Security Tools': FaLock,
+  'Update Management': FaWrench
 };
 
 // Service data - in a real app, this would come from a database or CMS
@@ -50,11 +93,7 @@ const services = {
   'web-development': {
     title: 'Web Development',
     description: 'Custom web applications built with modern technologies like React, Next.js, and Node.js. Scalable, secure, and performance-optimized solutions.',
-    icon: (
-      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    ),
+    icon: <SiReact className="w-12 h-12 md:w-16 md:h-16 text-white" />,
     color: 'from-blue-500 to-blue-600',
     features: [
       'Responsive Design',
@@ -110,11 +149,7 @@ const services = {
   'mobile-development': {
     title: 'Mobile Development',
     description: 'Native and cross-platform mobile applications for iOS and Android. Built with React Native, Flutter, or native technologies.',
-    icon: (
-      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-      </svg>
-    ),
+    icon: <FaMobile className="w-12 h-12 md:w-16 md:h-16 text-white" />,
     color: 'from-purple-500 to-purple-600',
     features: [
       'Cross-Platform Development',
@@ -170,11 +205,7 @@ const services = {
   'ui-ux-design': {
     title: 'UI/UX Design',
     description: 'User-centered design solutions that create engaging and intuitive user experiences. From wireframes to high-fidelity prototypes.',
-    icon: (
-      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
-      </svg>
-    ),
+    icon: <FaPalette className="w-12 h-12 md:w-16 md:h-16 text-white" />,
     color: 'from-green-500 to-green-600',
     features: [
       'User Research',
@@ -218,33 +249,29 @@ const services = {
       standard: {
         name: 'Standard',
         price: '$6,000',
-        features: ['Everything in Basic', 'High-Fidelity Designs', 'User Testing', '5 Revisions']
+        features: ['Everything in Basic', 'High-Fidelity Designs', 'User Testing', 'Interactive Prototypes']
       },
       premium: {
         name: 'Premium',
         price: '$12,000',
-        features: ['Everything in Standard', 'Interactive Prototypes', 'Design Handoff', 'Unlimited Revisions']
+        features: ['Everything in Standard', 'Custom Illustrations', 'Animation', 'Design Handoff']
       }
     }
   },
   'cloud-solutions': {
     title: 'Cloud Solutions',
-    description: 'Scalable cloud infrastructure and deployment solutions using AWS, Azure, or Google Cloud. DevOps and CI/CD pipeline setup.',
-    icon: (
-      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-      </svg>
-    ),
+    description: 'Scalable cloud infrastructure and DevOps solutions using AWS, Azure, and Google Cloud. From setup to maintenance.',
+    icon: <FaCloud className="w-12 h-12 md:w-16 md:h-16 text-white" />,
     color: 'from-orange-500 to-orange-600',
     features: [
-      'AWS/Azure/GCP',
+      'Cloud Migration',
+      'Infrastructure as Code',
+      'Container Orchestration',
       'CI/CD Pipelines',
-      'Monitoring & Security',
+      'Monitoring & Logging',
+      'Security & Compliance',
       'Auto-scaling',
-      'Load Balancing',
-      'Database Management',
-      'Backup & Recovery',
-      'Cost Optimization'
+      'Disaster Recovery'
     ],
     technologies: ['AWS', 'Azure', 'Google Cloud', 'Docker', 'Kubernetes', 'Terraform'],
     process: [
@@ -256,145 +283,136 @@ const services = {
       {
         step: '02',
         title: 'Architecture Design',
-        description: 'Designing scalable and secure cloud architecture for your applications.'
+        description: 'Designing scalable and secure cloud architecture for your needs.'
       },
       {
         step: '03',
-        title: 'Migration & Setup',
-        description: 'Migrating applications and setting up cloud infrastructure and CI/CD pipelines.'
+        title: 'Implementation',
+        description: 'Setting up infrastructure and migrating applications to the cloud.'
       },
       {
         step: '04',
         title: 'Optimization',
-        description: 'Monitoring performance and optimizing costs while maintaining security.'
+        description: 'Monitoring performance and optimizing costs and efficiency.'
       }
     ],
     pricing: {
       basic: {
         name: 'Basic',
-        price: '$4,000',
-        features: ['Cloud Migration', 'Basic Monitoring', 'Backup Setup', '3 Months Support']
+        price: '$2,000/month',
+        features: ['Cloud Setup', 'Basic Monitoring', 'Backup Solutions', 'Email Support']
       },
       standard: {
         name: 'Standard',
-        price: '$8,000',
-        features: ['Everything in Basic', 'CI/CD Pipeline', 'Auto-scaling', '6 Months Support']
+        price: '$5,000/month',
+        features: ['Everything in Basic', 'Auto-scaling', '24/7 Monitoring', 'Phone Support']
       },
       premium: {
         name: 'Premium',
-        price: '$15,000',
-        features: ['Everything in Standard', 'Multi-cloud Setup', 'Advanced Security', '1 Year Support']
+        price: '$10,000/month',
+        features: ['Everything in Standard', 'Custom Solutions', 'Dedicated Support', 'SLA Guarantee']
       }
     }
   },
   'consulting': {
-    title: 'Consulting',
-    description: 'Strategic technology consulting to help your business make informed decisions. Architecture reviews, performance audits, and best practices.',
-    icon: (
-      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    color: 'from-red-500 to-red-600',
+    title: 'Technical Consulting',
+    description: 'Expert guidance on technology strategy, architecture, and best practices. Helping you make informed decisions.',
+    icon: <FaCheckCircle className="w-12 h-12 md:w-16 md:h-16 text-white" />,
+    color: 'from-indigo-500 to-indigo-600',
     features: [
+      'Technology Strategy',
       'Architecture Review',
-      'Performance Audit',
-      'Best Practices',
-      'Technology Selection',
-      'Security Assessment',
-      'Scalability Planning',
+      'Performance Audits',
+      'Security Assessments',
+      'Code Reviews',
       'Team Training',
-      'Code Review'
+      'Best Practices',
+      'Migration Planning'
     ],
     technologies: ['Architecture Patterns', 'Performance Tools', 'Security Frameworks', 'Best Practices'],
     process: [
       {
         step: '01',
         title: 'Discovery',
-        description: 'Understanding your current technology stack and business challenges.'
+        description: 'Understanding your current state, challenges, and objectives.'
       },
       {
         step: '02',
         title: 'Analysis',
-        description: 'Conducting thorough analysis of your systems and identifying improvement areas.'
+        description: 'Deep dive into your systems, processes, and technology stack.'
       },
       {
         step: '03',
         title: 'Recommendations',
-        description: 'Providing detailed recommendations and implementation roadmaps.'
+        description: 'Providing actionable insights and strategic recommendations.'
       },
       {
         step: '04',
-        title: 'Implementation Support',
-        description: 'Supporting your team in implementing the recommended solutions.'
+        title: 'Implementation',
+        description: 'Supporting the execution of recommendations and best practices.'
       }
     ],
     pricing: {
       basic: {
         name: 'Basic',
-        price: '$2,000',
-        features: ['Architecture Review', 'Basic Recommendations', '1 Month Support', 'Documentation']
+        price: '$150/hour',
+        features: ['Technology Review', 'Basic Recommendations', 'Email Support', '1 Month Follow-up']
       },
       standard: {
         name: 'Standard',
-        price: '$5,000',
-        features: ['Everything in Basic', 'Performance Audit', '3 Months Support', 'Implementation Guide']
+        price: '$250/hour',
+        features: ['Everything in Basic', 'Detailed Analysis', 'Implementation Support', '3 Months Follow-up']
       },
       premium: {
         name: 'Premium',
-        price: '$10,000',
-        features: ['Everything in Standard', 'Full Assessment', '6 Months Support', 'Team Training']
+        price: '$500/hour',
+        features: ['Everything in Standard', 'Strategic Planning', 'Ongoing Support', 'Quarterly Reviews']
       }
     }
   },
   'maintenance': {
-    title: 'Maintenance',
-    description: 'Ongoing support and maintenance for your applications. Regular updates, bug fixes, and performance monitoring.',
-    icon: (
-      <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
-    color: 'from-indigo-500 to-indigo-600',
+    title: 'Maintenance & Support',
+    description: 'Ongoing maintenance, updates, and support to keep your applications running smoothly and securely.',
+    icon: <FaWrench className="w-12 h-12 md:w-16 md:h-16 text-white" />,
+    color: 'from-red-500 to-red-600',
     features: [
-      '24/7 Support',
       'Regular Updates',
-      'Performance Monitoring',
       'Security Patches',
+      'Performance Monitoring',
       'Bug Fixes',
       'Backup Management',
+      '24/7 Support',
       'Uptime Monitoring',
-      'Emergency Support'
+      'Emergency Response'
     ],
     technologies: ['Monitoring Tools', 'Backup Systems', 'Security Tools', 'Update Management'],
     process: [
       {
         step: '01',
-        title: 'Setup',
-        description: 'Setting up monitoring, backup systems, and maintenance procedures.'
+        title: 'Assessment',
+        description: 'Evaluating your current maintenance needs and setting up monitoring.'
       },
       {
         step: '02',
-        title: 'Monitoring',
-        description: 'Continuous monitoring of performance, security, and uptime.'
+        title: 'Implementation',
+        description: 'Setting up automated monitoring, backups, and security measures.'
       },
       {
         step: '03',
-        title: 'Maintenance',
-        description: 'Regular updates, security patches, and performance optimizations.'
+        title: 'Ongoing Support',
+        description: 'Regular maintenance, updates, and proactive issue resolution.'
       },
       {
         step: '04',
-        title: 'Support',
-        description: '24/7 support for any issues or emergencies that arise.'
+        title: 'Optimization',
+        description: 'Continuous improvement and optimization of your systems.'
       }
     ],
     pricing: {
       basic: {
         name: 'Basic',
         price: '$500/month',
-        features: ['Basic Monitoring', 'Monthly Updates', 'Email Support', 'Bug Fixes']
+        features: ['Weekly Updates', 'Email Support', 'Basic Monitoring', 'Security Patches']
       },
       standard: {
         name: 'Standard',
@@ -416,8 +434,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ServicePage({ params }) {
-  const service = services[params.slug];
+export default async function ServicePage({ params }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const service = services[slug];
 
   if (!service) {
     notFound();
@@ -427,22 +447,22 @@ export default function ServicePage({ params }) {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pt-20 pb-12 md:pb-16">
           <div className="text-center">
-            <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
               {service.icon}
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
               {service.title}
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-3xl mx-auto px-4">
               {service.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 md:px-8 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
                 Get Started
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:border-blue-600 hover:text-blue-600 transition-all duration-200">
+              <button className="border-2 border-gray-300 text-gray-700 px-6 md:px-8 py-3 rounded-xl font-medium hover:border-blue-600 hover:text-blue-600 transition-all duration-200">
                 View Pricing
               </button>
             </div>
@@ -450,31 +470,29 @@ export default function ServicePage({ params }) {
         </div>
         
         {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-blue-100 rounded-full opacity-50 -z-10"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-purple-100 rounded-full opacity-50 -z-10"></div>
+        <div className="absolute top-20 left-4 md:left-10 w-16 h-16 md:w-20 md:h-20 bg-blue-100 rounded-full opacity-50 -z-10"></div>
+        <div className="absolute top-40 right-4 md:right-20 w-12 h-12 md:w-16 md:h-16 bg-purple-100 rounded-full opacity-50 -z-10"></div>
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               What's Included
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto px-4">
               Comprehensive features and capabilities to deliver exceptional results.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {service.features.map((feature, index) => (
-              <div key={index} className="text-center p-6 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-200">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+              <div key={index} className="text-center p-4 md:p-6 bg-gray-50 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105 border border-gray-100">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mx-auto mb-3 md:mb-4">
+                  <FaCheckCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature}</h3>
+                <h3 className="text-sm md:text-lg font-semibold text-gray-900 mb-2">{feature}</h3>
               </div>
             ))}
           </div>
@@ -482,26 +500,26 @@ export default function ServicePage({ params }) {
       </section>
 
       {/* Technologies Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Technologies We Use
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto px-4">
               Modern tools and technologies to build robust and scalable solutions.
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {service.technologies.map((tech, index) => {
               const Icon = technologyIcons[tech];
               return (
-                <div key={index} className="text-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                    {Icon ? <Icon className="w-8 h-8 text-blue-600" /> : <span className="text-blue-600 font-bold text-lg">{tech.charAt(0)}</span>}
+                <div key={index} className="text-center p-3 md:p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 border border-gray-100">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2 md:mb-3">
+                    {Icon ? <Icon className="w-6 h-6 md:w-8 md:h-8 text-blue-600" /> : <span className="text-blue-600 font-bold text-sm md:text-lg">{tech.charAt(0)}</span>}
                   </div>
-                  <p className="text-gray-900 font-medium">{tech}</p>
+                  <p className="text-xs md:text-sm text-gray-900 font-medium">{tech}</p>
                 </div>
               );
             })}
@@ -510,25 +528,30 @@ export default function ServicePage({ params }) {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Our Process
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto px-4">
               A proven methodology to deliver successful projects on time and within budget.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {service.process.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-lg">{step.step}</span>
+              <div key={index} className="text-center relative">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <span className="text-white font-bold text-sm md:text-lg">{step.step}</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
-                <p className="text-gray-600">{step.description}</p>
+                <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">{step.description}</p>
+                
+                {/* Connector line for desktop */}
+                {index < service.process.length - 1 && (
+                  <div className="hidden lg:block absolute top-7 left-full w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform translate-x-4"></div>
+                )}
               </div>
             ))}
           </div>
@@ -536,36 +559,43 @@ export default function ServicePage({ params }) {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Pricing Plans
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto px-4">
               Choose the plan that best fits your needs and budget.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
             {Object.entries(service.pricing).map(([key, plan]) => (
-              <div key={key} className={`bg-white p-8 rounded-2xl shadow-lg ${key === 'standard' ? 'ring-2 ring-blue-500 transform scale-105' : ''}`}>
+              <div key={key} className={`bg-white p-6 md:p-8 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 ${
+                key === 'standard' ? 'ring-2 ring-blue-500 relative' : 'hover:shadow-xl'
+              }`}>
+                {key === 'standard' && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                      Most Popular
+                    </span>
+                  </div>
+                )}
                 <div className="text-center">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                  <div className="text-4xl font-bold text-blue-600 mb-6">{plan.price}</div>
-                  <ul className="space-y-3 mb-8">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                  <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-4 md:mb-6">{plan.price}</div>
+                  <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 text-left">
                     {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-gray-600">
-                        <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                        {feature}
+                      <li key={index} className="flex items-start text-sm md:text-base text-gray-600">
+                        <FaCheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <button className={`w-full py-3 rounded-lg font-medium transition-all duration-200 ${
+                  <button className={`w-full py-3 rounded-xl font-medium transition-all duration-200 ${
                     key === 'standard' 
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 shadow-lg'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg'
                       : 'border-2 border-gray-300 text-gray-700 hover:border-blue-600 hover:text-blue-600'
                   }`}>
                     Get Started
@@ -578,19 +608,19 @@ export default function ServicePage({ params }) {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-blue-100 mb-6 md:mb-8 max-w-2xl mx-auto px-4">
             Let's discuss your project requirements and create something amazing together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-200 transform hover:scale-105">
+            <Link href="/contact" className="bg-white text-blue-600 px-6 md:px-8 py-3 rounded-xl font-medium hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-lg">
               Contact Us
             </Link>
-            <Link href="/services" className="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-all duration-200">
+            <Link href="/services" className="border-2 border-white text-white px-6 md:px-8 py-3 rounded-xl font-medium hover:bg-white hover:text-blue-600 transition-all duration-200">
               View All Services
             </Link>
           </div>
