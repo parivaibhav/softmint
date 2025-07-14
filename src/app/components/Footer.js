@@ -26,13 +26,13 @@ export default function Footer() {
                 <FaTwitter className="w-6 h-6" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/vaibhav-pari-399a88230/"
                 className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
               >
                 <FaLinkedin className="w-6 h-6" />
               </a>
               <a
-                href="#"
+                href="https://github.com/parivaibhav"
                 className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
               >
                 <FaGithub className="w-6 h-6" />
@@ -78,6 +78,14 @@ export default function Footer() {
                   className="text-gray-400 hover:text-white transition-colors duration-200"
                 >
                   Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  Blog
                 </Link>
               </li>
               <li>
@@ -137,8 +145,8 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <FaMapMarkerAlt className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-400">123 Business Street</p>
-                  <p className="text-gray-400">Tech City, TC 12345</p>
+                  <p className="text-gray-400">Alap Colony, Mangrol Road</p>
+                  <p className="text-gray-400">Keshod, GJ 362220</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
@@ -167,23 +175,23 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2024 NextApp. All rights reserved.
+              © 2024 SoftMint. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a
-                href="#"
+                href="/privacy-policy"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
               >
                 Privacy Policy
               </a>
               <a
-                href="#"
+                href="/terms-of-service"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
               >
                 Terms of Service
               </a>
               <a
-                href="#"
+                href="/cookie-policy"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
               >
                 Cookie Policy

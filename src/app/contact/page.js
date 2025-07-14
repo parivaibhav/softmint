@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaMapMarkerAlt, FaEnvelope, FaPhone, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaPhone,
+  FaCheckCircle,
+  FaExclamationTriangle,
+} from "react-icons/fa";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -22,22 +28,22 @@ export default function Contact() {
       required: true,
       minLength: 2,
       maxLength: 50,
-      pattern: /^[a-zA-Z\s]+$/
+      pattern: /^[a-zA-Z\s]+$/,
     },
     email: {
       required: true,
-      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
     subject: {
       required: true,
       minLength: 5,
-      maxLength: 100
+      maxLength: 100,
     },
     message: {
       required: true,
       minLength: 10,
-      maxLength: 1000
-    }
+      maxLength: 1000,
+    },
   };
 
   // Validation function
@@ -46,22 +52,36 @@ export default function Contact() {
     const fieldErrors = [];
 
     if (rules.required && !value.trim()) {
-      fieldErrors.push(`${name.charAt(0).toUpperCase() + name.slice(1)} is required`);
+      fieldErrors.push(
+        `${name.charAt(0).toUpperCase() + name.slice(1)} is required`
+      );
     }
 
-    if (value.trim() && rules.minLength && value.trim().length < rules.minLength) {
-      fieldErrors.push(`${name.charAt(0).toUpperCase() + name.slice(1)} must be at least ${rules.minLength} characters`);
+    if (
+      value.trim() &&
+      rules.minLength &&
+      value.trim().length < rules.minLength
+    ) {
+      fieldErrors.push(
+        `${name.charAt(0).toUpperCase() + name.slice(1)} must be at least ${
+          rules.minLength
+        } characters`
+      );
     }
 
     if (rules.maxLength && value.trim().length > rules.maxLength) {
-      fieldErrors.push(`${name.charAt(0).toUpperCase() + name.slice(1)} must be less than ${rules.maxLength} characters`);
+      fieldErrors.push(
+        `${name.charAt(0).toUpperCase() + name.slice(1)} must be less than ${
+          rules.maxLength
+        } characters`
+      );
     }
 
     if (rules.pattern && !rules.pattern.test(value)) {
-      if (name === 'email') {
-        fieldErrors.push('Please enter a valid email address');
-      } else if (name === 'name') {
-        fieldErrors.push('Name can only contain letters and spaces');
+      if (name === "email") {
+        fieldErrors.push("Please enter a valid email address");
+      } else if (name === "name") {
+        fieldErrors.push("Name can only contain letters and spaces");
       }
     }
 
@@ -71,16 +91,16 @@ export default function Contact() {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: []
+        [name]: [],
       }));
     }
   };
@@ -88,15 +108,15 @@ export default function Contact() {
   // Handle input blur (when user leaves a field)
   const handleBlur = (e) => {
     const { name, value } = e.target;
-    setTouched(prev => ({
+    setTouched((prev) => ({
       ...prev,
-      [name]: true
+      [name]: true,
     }));
 
     const fieldErrors = validateField(name, value);
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      [name]: fieldErrors
+      [name]: fieldErrors,
     }));
   };
 
@@ -105,7 +125,7 @@ export default function Contact() {
     const newErrors = {};
     let isValid = true;
 
-    Object.keys(validationRules).forEach(field => {
+    Object.keys(validationRules).forEach((field) => {
       const fieldErrors = validateField(field, formData[field]);
       newErrors[field] = fieldErrors;
       if (fieldErrors.length > 0) {
@@ -120,13 +140,13 @@ export default function Contact() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Mark all fields as touched
     setTouched({
       name: true,
       email: true,
       subject: true,
-      message: true
+      message: true,
     });
 
     if (!validateForm()) {
@@ -138,21 +158,20 @@ export default function Contact() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Success
-      setSubmitStatus('success');
+      setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
       setTouched({});
       setErrors({});
-      
+
       // Reset success message after 5 seconds
       setTimeout(() => {
         setSubmitStatus(null);
       }, 5000);
-      
     } catch (error) {
-      setSubmitStatus('error');
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -160,14 +179,14 @@ export default function Contact() {
 
   // Check if form is valid
   const isFormValid = () => {
-    return Object.keys(validationRules).every(field => {
+    return Object.keys(validationRules).every((field) => {
       const fieldErrors = validateField(field, formData[field]);
       return fieldErrors.length === 0;
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
@@ -201,22 +220,30 @@ export default function Contact() {
               </h2>
 
               {/* Success/Error Messages */}
-              {submitStatus === 'success' && (
+              {submitStatus === "success" && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
                   <FaCheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
                   <div>
-                    <h3 className="text-sm font-medium text-green-800">Message sent successfully!</h3>
-                    <p className="text-sm text-green-700">We'll get back to you within 24 hours.</p>
+                    <h3 className="text-sm font-medium text-green-800">
+                      Message sent successfully!
+                    </h3>
+                    <p className="text-sm text-green-700">
+                      We'll get back to you within 24 hours.
+                    </p>
                   </div>
                 </div>
               )}
 
-              {submitStatus === 'error' && (
+              {submitStatus === "error" && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
                   <FaExclamationTriangle className="w-5 h-5 text-red-500 flex-shrink-0" />
                   <div>
-                    <h3 className="text-sm font-medium text-red-800">Something went wrong</h3>
-                    <p className="text-sm text-red-700">Please try again or contact us directly.</p>
+                    <h3 className="text-sm font-medium text-red-800">
+                      Something went wrong
+                    </h3>
+                    <p className="text-sm text-red-700">
+                      Please try again or contact us directly.
+                    </p>
                   </div>
                 </div>
               )}
@@ -239,8 +266,8 @@ export default function Contact() {
                       onBlur={handleBlur}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-black ${
                         touched.name && errors.name?.length > 0
-                          ? 'border-red-300 bg-red-50'
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? "border-red-300 bg-red-50"
+                          : "border-gray-300 hover:border-gray-400"
                       }`}
                       placeholder="John Doe"
                     />
@@ -267,8 +294,8 @@ export default function Contact() {
                       onBlur={handleBlur}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-black ${
                         touched.email && errors.email?.length > 0
-                          ? 'border-red-300 bg-red-50'
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? "border-red-300 bg-red-50"
+                          : "border-gray-300 hover:border-gray-400"
                       }`}
                       placeholder="john@example.com"
                     />
@@ -290,14 +317,14 @@ export default function Contact() {
                   <input
                     type="text"
                     id="subject"
-                    name="subject"    
+                    name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-black ${
                       touched.subject && errors.subject?.length > 0
-                        ? 'border-red-300 bg-red-50'
-                        : 'border-gray-300 hover:border-gray-400'
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-300 hover:border-gray-400"
                     }`}
                     placeholder="Project Inquiry"
                   />
@@ -324,8 +351,8 @@ export default function Contact() {
                     rows={6}
                     className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none text-black ${
                       touched.message && errors.message?.length > 0
-                        ? 'border-red-300 bg-red-50'
-                        : 'border-gray-300 hover:border-gray-400'
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-300 hover:border-gray-400"
                     }`}
                     placeholder="Tell us about your project..."
                   ></textarea>
@@ -341,12 +368,7 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting || !isFormValid()}
-                  className={`w-full py-3 rounded-lg font-medium transition-all duration-200 transform ${
-                    isSubmitting || !isFormValid()
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 hover:scale-105 shadow-lg'
-                  }`}
+                  className="w-full py-3 rounded-lg font-medium transition-all duration-200 transform bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 hover:scale-105 shadow-lg"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center justify-center space-x-2">
@@ -354,7 +376,7 @@ export default function Contact() {
                       <span>Sending...</span>
                     </div>
                   ) : (
-                    'Send Message'
+                    "Send Message"
                   )}
                 </button>
               </form>
@@ -383,11 +405,11 @@ export default function Contact() {
                       Our Office
                     </h3>
                     <p className="text-gray-600">
-                      123 Business Street
+                      Alap Colony, Mangrol Road
                       <br />
-                      Tech City, TC 12345
+                      Keshod, Gujarat 362220
                       <br />
-                      United States
+                      India
                     </p>
                   </div>
                 </div>
@@ -446,6 +468,27 @@ export default function Contact() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps Location */}
+      <section className="py-8 bg-white">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <FaMapMarkerAlt className="text-blue-600" /> Our Location
+          </h2>
+          <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d715.2244434882554!2d70.2404545326931!3d21.29757237529212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sin!4v1752475843484!5m2!1sen!2sin"
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Google Map Location"
+            ></iframe>
           </div>
         </div>
       </section>

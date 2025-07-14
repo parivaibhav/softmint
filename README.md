@@ -1,4 +1,4 @@
-# NextApp - Modern Web Application
+# SoftMint - Modern Web Application
 
 A modern, responsive web application built with Next.js 15, React 19, and Tailwind CSS. Features a beautiful UI with dynamic routing, comprehensive service pages, and modern design patterns.
 

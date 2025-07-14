@@ -125,7 +125,7 @@ export default function SignUp() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-block mb-6 group">
             <div className="w-16 h-16 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-              <span className="text-white font-bold text-2xl">N</span>
+              <span className="text-white font-bold text-2xl">S</span>
             </div>
           </Link>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Create your account</h1>
@@ -143,7 +143,7 @@ export default function SignUp() {
                 </label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+                    <User className="h-5 w-5 text-black group-focus-within:text-black transition-colors duration-200" />
                   </div>
                   <input
                     type="text"
@@ -171,7 +171,7 @@ export default function SignUp() {
                 </label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+                    <User className="h-5 w-5 text-black group-focus-within:text-black transition-colors duration-200" />
                   </div>
                   <input
                     type="text"
@@ -201,7 +201,7 @@ export default function SignUp() {
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+                  <Mail className="h-5 w-5 text-black group-focus-within:text-black transition-colors duration-200" />
                 </div>
                 <input
                   type="email"
@@ -230,7 +230,7 @@ export default function SignUp() {
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+                  <Lock className="h-5 w-5 text-black group-focus-within:text-black transition-colors duration-200" />
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -249,9 +249,9 @@ export default function SignUp() {
                   className="absolute inset-y-0 right-0 pr-4 flex items-center hover:text-gray-600 transition-colors duration-200"
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-black" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-black" />
                   )}
                 </button>
               </div>
@@ -290,7 +290,7 @@ export default function SignUp() {
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+                  <Lock className="h-5 w-5 text-black group-focus-within:text-black transition-colors duration-200" />
                 </div>
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
@@ -309,9 +309,9 @@ export default function SignUp() {
                   className="absolute inset-y-0 right-0 pr-4 flex items-center hover:text-gray-600 transition-colors duration-200"
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
+                    <EyeOff className="h-5 w-5 text-black" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
+                    <Eye className="h-5 w-5 text-black" />
                   )}
                 </button>
               </div>

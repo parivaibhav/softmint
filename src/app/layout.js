@@ -1,7 +1,9 @@
+"use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,12 +15,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "SoftMint",
-  description: "SoftMint is a modern, responsive web application built with Next.js and Tailwind CSS. Experience the perfect blend of performance and beautiful design.",
-};
-
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
+
   return (
     <html lang="en">
       <head>
@@ -39,13 +39,14 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#6366f1" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}
+        style={{ background: '#fff', color: '#171717' }}
       >
-        <Navbar />
+        {!isAdminRoute && <Navbar />}
         <main>
           {children}
         </main>
-        <Footer />
+        {!isAdminRoute && <Footer />}
       </body>
     </html>
   );

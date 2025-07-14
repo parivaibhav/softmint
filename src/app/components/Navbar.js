@@ -33,8 +33,8 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-xl border-b border-gray-200/50"
-            : "bg-white/100 backdrop-blur-sm border-b border-gradient-to-r from-blue-200/30 via-purple-200/30 to-pink-200/30"
+            ? "bg-white/95 backdrop-blur-md shadow-xl"
+            : "bg-white/100 backdrop-blur-sm"
         } ${isMenuOpen ? "bg-white" : ""}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,6 +89,13 @@ export default function Navbar() {
                   Contact
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
+                <Link
+                  href="/blog"
+                  className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
+                >
+                 Blog
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
               </div>
             </div>
 
@@ -130,7 +137,7 @@ export default function Navbar() {
                 : "max-h-0 opacity-0 invisible"
             }`}
           >
-            <div className="py-4 space-y-2 border-t border-gray-200/50 bg-white/95 backdrop-blur-md rounded-b-3xl shadow-2xl">
+            <div className="py-4 space-y-2 bg-white shadow-2xl">
               <Link
                 href="/"
                 className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
@@ -163,7 +170,7 @@ export default function Navbar() {
               </Link>
 
               {/* Mobile CTA Buttons */}
-              <div className="px-4 pt-4 space-y-3 border-t border-gray-200/50">
+              <div className="px-4 pt-4 space-y-3">
                 <Link href="/signin" onClick={closeMenu}>
                   <button className="w-full px-4 py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 hover:bg-gray-50 rounded-xl">
                     Sign In
@@ -177,15 +184,15 @@ export default function Navbar() {
               </div>
 
               {/* Mobile Contact Info */}
-              <div className="px-4 pt-4 border-t border-gray-200/50">
+              <div className="px-4 pt-4">
                 <div className="space-y-3 text-sm text-gray-600">
                   <div className="flex items-center space-x-3">
                     <Phone className="w-4 h-4 text-blue-500" />
-                    <span>+1 (555) 123-4567</span>
+                    <span>+91 8799064890</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Mail className="w-4 h-4 text-blue-500" />
-                    <span>hello@nextapp.com</span>
+                    <span>vaibhavgoswami055@gmail.com</span>
                   </div>
                 </div>
               </div>

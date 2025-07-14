@@ -462,9 +462,9 @@ export default async function ServicePage({ params }) {
               <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 md:px-8 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
                 Get Started
               </button>
-              <button className="border-2 border-gray-300 text-gray-700 px-6 md:px-8 py-3 rounded-xl font-medium hover:border-blue-600 hover:text-blue-600 transition-all duration-200">
+              <a href="#pricing" className="border-2 border-gray-300 text-gray-700 px-6 md:px-8 py-3 rounded-xl font-medium hover:border-blue-600 hover:text-blue-600 transition-all duration-200 cursor-pointer scroll-smooth">
                 View Pricing
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -539,19 +539,42 @@ export default async function ServicePage({ params }) {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
+            {/* Connector lines for desktop (behind steps) */}
+            <div className="hidden lg:block absolute top-7 left-0 right-0 h-0.5 z-0 w-full">
+              {service.process.map((_, index) => {
+                // Calculate left and right positions for each step
+                if (index === 0) {
+                  // First step: right half only
+                  return (
+                    <div key={index} className="absolute left-1/4 w-1/2 h-full">
+                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-purple-600"></div>
+                    </div>
+                  );
+                } else if (index === service.process.length - 1) {
+                  // Last step: left half only
+                  return (
+                    <div key={index} className="absolute left-0 w-1/2 h-full">
+                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-purple-600"></div>
+                    </div>
+                  );
+                } else {
+                  // Middle steps: full width
+                  return (
+                    <div key={index} className="absolute left-0 w-full h-full">
+                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-purple-600"></div>
+                    </div>
+                  );
+                }
+              })}
+            </div>
             {service.process.map((step, index) => (
-              <div key={index} className="text-center relative">
+              <div key={index} className="text-center relative z-10">
                 <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                   <span className="text-white font-bold text-sm md:text-lg">{step.step}</span>
                 </div>
                 <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
                 <p className="text-sm md:text-base text-gray-600 leading-relaxed">{step.description}</p>
-                
-                {/* Connector line for desktop */}
-                {index < service.process.length - 1 && (
-                  <div className="hidden lg:block absolute top-7 left-full w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform translate-x-4"></div>
-                )}
               </div>
             ))}
           </div>
@@ -559,7 +582,7 @@ export default async function ServicePage({ params }) {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-12 md:py-16 bg-gray-50">
+      <section id="pricing" className="py-12 md:py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
