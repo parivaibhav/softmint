@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { use } from "react";
 import { 
   SiReact, 
   SiNextdotjs, 
@@ -435,7 +436,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ServicePage({ params }) {
-  const resolvedParams = await params;
+  const resolvedParams = typeof params.then === "function" ? use(params) : params;
   const slug = resolvedParams.slug;
   const service = services[slug];
 

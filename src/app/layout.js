@@ -1,9 +1,8 @@
-"use client";
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname();
-  const isAdminRoute = pathname.startsWith("/admin");
-
+  // Server components cannot use usePathname or any client hooks
+  // If you want to conditionally render Navbar/Footer, do it in a client component or use pathname from props (if available)
   return (
     <html lang="en">
       <head>
@@ -42,11 +40,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}
         style={{ background: '#fff', color: '#171717' }}
       >
-        {!isAdminRoute && <Navbar />}
+        <Navbar />
         <main>
           {children}
         </main>
-        {!isAdminRoute && <Footer />}
+        <Footer />
       </body>
     </html>
   );

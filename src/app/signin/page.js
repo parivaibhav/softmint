@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Github, Twitter } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Github } from 'lucide-react';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -20,51 +20,58 @@ export default function SignIn() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
-    // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-
+    if (!formData.email) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Please enter a valid email';
+    if (!formData.password) newErrors.password = 'Password is required';
+    else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
+    if (!validateForm()) return;
     setIsLoading(true);
-    
-    // Simulate API call
+    setErrors({});
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Sign in data:', formData);
-      // Handle successful sign in here
+      const res = await fetch('/api/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+        credentials: 'include',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setTimeout(async () => {
+          const meRes = await fetch('/api/me');
+          if (meRes.ok) {
+            const user = await meRes.json();
+            if (user.userType === 'admin') {
+              window.location.href = '/admin';
+            } else if (user.userType === 'user') {
+              window.location.href = '/user';
+            } else {
+              setErrors({ general: 'Unknown user type.' });
+            }
+          } else {
+            setErrors({ general: 'Could not fetch user info.' });
+          }
+        }, 100);
+      } else {
+        setErrors({ general: data.error || 'Login failed' });
+      }
     } catch (error) {
-      console.error('Sign in error:', error);
+      setErrors({ general: 'An error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +85,6 @@ export default function SignIn() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        {/* Header */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block mb-6 group">
             <div className="w-16 h-16 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl flex items-center justify-center mx-auto shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
@@ -88,11 +94,8 @@ export default function SignIn() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
           <p className="text-gray-600">Sign in to your account to continue</p>
         </div>
-
-        {/* Sign In Form */}
         <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/20">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
                 Email address
@@ -120,8 +123,6 @@ export default function SignIn() {
                 </p>
               )}
             </div>
-
-            {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-3">
                 Password
@@ -160,8 +161,6 @@ export default function SignIn() {
                 </p>
               )}
             </div>
-
-            {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
@@ -183,27 +182,21 @@ export default function SignIn() {
                 Forgot password?
               </Link>
             </div>
-
-            {/* Sign In Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-lg"
             >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                  Signing in...
-                </div>
-              ) : (
-                <div className="flex items-center justify-center">
-                  Sign in
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </div>
+              {isLoading && (
+                <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></span>
               )}
+              {isLoading ? 'Signing in...' : 'Sign in'}
+              <ArrowRight className="ml-2 h-5 w-5" />
             </button>
+            {errors.general && (
+              <div className="mt-4 text-red-600 text-center">{errors.general}</div>
+            )}
           </form>
-
           {/* Divider */}
           <div className="my-8">
             <div className="relative">
@@ -252,8 +245,6 @@ export default function SignIn() {
             </p>
           </div>
         </div>
-
-    
       </div>
     </div>
   );

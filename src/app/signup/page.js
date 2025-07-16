@@ -81,14 +81,30 @@ export default function SignUp() {
     }
 
     setIsLoading(true);
-    
-    // Simulate API call
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Sign up data:', formData);
-      // Handle successful sign up here
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        }),
+        credentials: 'include', // Important: allows cookies to be set
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // Signup successful, cookie is set by the server
+        window.location.href = '/user';
+      } else {
+        setErrors({ general: data.error || 'Sign up failed' });
+      }
     } catch (error) {
-      console.error('Sign up error:', error);
+      setErrors({ general: 'An error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -134,6 +150,10 @@ export default function SignUp() {
 
         {/* Sign Up Form */}
         <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white/20">
+          {/* Show backend error if present */}
+          {errors.general && (
+            <div className="text-red-600 text-center mb-4">{errors.general}</div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">

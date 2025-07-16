@@ -1,44 +1,56 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, Mail } from "lucide-react";
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
+import { Menu, X, UserCircle, ChevronDown, LogOut, Settings, Home } from "lucide-react";
+import jwt from 'jsonwebtoken';
 
-export default function Navbar() {
+export default function UserHeader() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+
 
   useEffect(() => {
-    console.log('Navbar useEffect running');
-    const token = Cookies.get('token');
-    console.log('Token from cookie:', token);
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        console.log('Decoded token:', decoded);
-        if (decoded && decoded.userId && decoded.username) {
-          if (decoded.userType === 'admin' && window.location.pathname !== '/admin') {
-            window.location.href = '/admin';
-          } else if (decoded.userType === 'user' && window.location.pathname !== '/user') {
-            window.location.href = '/user';
-          }
-        }
-      } catch (e) {
-        console.log('JWT decode error:', e);
-      }
-    }
+    fetch('/api/me')
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        setUser(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setUser(null);
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -48,11 +60,25 @@ export default function Navbar() {
     setIsMenuOpen(false);
   };
 
+  // Logout handler
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      window.location.href = '/signin';
+    } catch (err) {
+      window.location.href = '/signin';
+    }
+  };
+
+  if (loading) return null;
+  if (!user) return null;
+
   return (
     <>
-  
-
-      {/* Main Navbar */}
+      {/* Main User Navbar */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
@@ -64,7 +90,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16 md:h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+              <Link href="/user" className="flex items-center space-x-2 sm:space-x-3 group">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                   <span className="text-white font-bold text-sm sm:text-lg md:text-xl animate-logo-bounce">
                     S
@@ -75,7 +101,7 @@ export default function Navbar() {
                     SoftMint
                   </span>
                   <span className="text-xs text-gray-500 -mt-1 hidden sm:block animate-pulse" style={{animationDelay: '1s'}}>
-                    Innovation Hub
+                    User Panel
                   </span>
                 </div>
               </Link>
@@ -85,56 +111,90 @@ export default function Navbar() {
             <div className="hidden lg:block">
               <div className="flex items-center space-x-1">
                 <Link
-                  href="/"
+                  href="/user"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
                 >
                   Home
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-            
                 <Link
-                  href="/about"
+                  href="/user/about"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
                 >
                   About
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
                 <Link
-                  href="/services"
+                  href="/user/services"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
                 >
                   Services
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/user/contact"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
                 >
                   Contact
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
                 <Link
-                  href="/blog"
+                  href="/user/blog"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
                 >
-                 Blog
+                  Blog
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+               
+                <Link
+                  href="/user/account"
+                  className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
+                >
+                  Account
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* User Dropdown */}
             <div className="hidden lg:flex items-center space-x-4">
-              <Link href="/signin">
-                <button className="px-4 py-2.5 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gray-50 rounded-xl">
-                  Sign In
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  className="flex items-center space-x-2 focus:outline-none group"
+                  onClick={() => setDropdownOpen((open) => !open)}
+                >
+                  <UserCircle className="w-10 h-10 text-blue-600 bg-blue-100 rounded-full p-1" />
+                  <span className="font-medium text-gray-800 hidden sm:block">
+                    {user.firstName}
+                    {user.username && (
+                      <span className="ml-2 text-xs text-blue-500">@{user.username}</span>
+                    )}
+                  </span>
+                  <ChevronDown className="w-5 h-5 text-gray-500 group-hover:text-blue-600 transition-colors duration-200" />
                 </button>
-              </Link>
-              <Link href="/signup">
-                <button className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-xl font-medium hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105">
-                  Get Started
-                </button>
-              </Link>
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100 animate-fade-in">
+                    <Link
+                      href="/user/account"
+                      className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <Settings className="w-5 h-5 mr-2 text-blue-600" />
+                      Account
+                    </Link>
+                    <button
+                      className="flex items-center w-full px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                      onClick={() => {
+                        setDropdownOpen(false);
+                        handleLogout();
+                      }}
+                    >
+                      <LogOut className="w-5 h-5 mr-2 text-red-500" />
+                      Log out
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Mobile menu button */}
@@ -163,70 +223,70 @@ export default function Navbar() {
           >
             <div className="py-4 space-y-2 bg-white shadow-2xl">
               <Link
-                href="/"
+                href="/user"
                 className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
                 onClick={closeMenu}
               >
                 Home
               </Link>
               <Link
-                href="/about"
+                href="/user/about"
                 className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
                 onClick={closeMenu}
               >
                 About
               </Link>
-
               <Link
-                href="/services"
+                href="/user/services"
                 className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
                 onClick={closeMenu}
               >
                 Services
               </Link>
-
               <Link
-                href="/contact"
+                href="/user/contact"
                 className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
                 onClick={closeMenu}
               >
                 Contact
               </Link>
-
-              {/* Mobile CTA Buttons */}
+              <Link
+                href="/user/blog"
+                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
+                onClick={closeMenu}
+              >
+                Blog
+              </Link>
+              <Link
+                href="/user/account"
+                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
+                onClick={closeMenu}
+              >
+                Account
+              </Link>
+              {/* Mobile User Dropdown (as links) */}
               <div className="px-4 pt-4 space-y-3">
-                <Link href="/signin" onClick={closeMenu}>
+                <Link href="/user/account" onClick={closeMenu}>
                   <button className="w-full px-4 py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 hover:bg-gray-50 rounded-xl">
-                    Sign In
+                    Account
                   </button>
                 </Link>
-                <Link href="/signup" onClick={closeMenu}>
-                  <button className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-200">
-                    Get Started
-                  </button>
-                </Link>
-              </div>
-
-              {/* Mobile Contact Info */}
-              <div className="px-4 pt-4">
-                <div className="space-y-3 text-sm text-gray-600">
-                  <div className="flex items-center space-x-3">
-                    <Phone className="w-4 h-4 text-blue-500" />
-                    <span>+91 8799064890</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Mail className="w-4 h-4 text-blue-500" />
-                    <span>vaibhavgoswami055@gmail.com</span>
-                  </div>
-                </div>
+                <button
+                  className="w-full px-4 py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 hover:bg-gray-50 rounded-xl"
+                  onClick={() => {
+                    closeMenu();
+                    handleLogout();
+                  }}
+                >
+                  Log out
+                </button>
               </div>
             </div>
           </div>
         </div>
       </nav>
-
       {/* Spacer for fixed navbar */}
       <div className="h-16 md:h-20"></div>
     </>
   );
-}
+} 
