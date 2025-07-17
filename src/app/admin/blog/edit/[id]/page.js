@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, use as usePromise, useRef } from "react";
-import AdminHeader from "../../../components/AdminHeader";
+
 
 export default function EditBlogPage({ params }) {
   const resolvedParams = typeof params.then === 'function' ? usePromise(params) : params;
@@ -117,7 +117,7 @@ export default function EditBlogPage({ params }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <AdminHeader />
+   
       <div className="flex-1 w-full max-w-2xl mx-auto py-8 px-2 sm:px-4 md:py-16">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Edit Blog</h1>
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow p-4 sm:p-8 flex flex-col gap-6">

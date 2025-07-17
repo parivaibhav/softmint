@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, use as usePromise } from "react";
+import { useState, use as usePromise ,useEffect } from "react";
+
 
 // Mock service data (in a real app, fetch by id)
 const mockServices = [

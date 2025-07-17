@@ -1,9 +1,10 @@
-import { authenticateUser } from '@/lib/authenticateUser';
-import { redirect } from 'next/navigation';
+import { authenticateUser } from "@/lib/authenticateUser";
+import { redirect } from "next/navigation";
+import UserContactForm from "./UserContactForm";
 
-export default function UserContact() {
-  const user = authenticateUser('user');
-  if (!user) redirect('/signin');
+export default async function UserContactPage() {
+  const user = await authenticateUser("user");
+  if (!user) redirect("/signin");
 
-  return <div className="p-8 text-xl">User Contact Page</div>;
-} 
+  return <UserContactForm />;
+}

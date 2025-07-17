@@ -1,200 +1,92 @@
-# SoftMint - Modern Web Application
+# SoftMint
 
-A modern, responsive web application built with Next.js 15, React 19, and Tailwind CSS. Features a beautiful UI with dynamic routing, comprehensive service pages, and modern design patterns.
+A modern, full-stack business dashboard and website built with Next.js 15 (App Router), React 19, and Tailwind CSS. Features authentication, role-based admin/user dashboards, dynamic blog and services, and a beautiful, responsive UI.
 
-## 📝 Project Description
-
-NextApp represents the pinnacle of modern web development, showcasing a comprehensive business website that seamlessly combines cutting-edge technology with exceptional user experience. Built with the latest Next.js 15 framework and React 19, this application demonstrates advanced features including dynamic routing, server-side rendering, and optimized performance. The design system leverages Tailwind CSS 4 for a consistent, responsive layout that adapts beautifully across all devices. The application features six detailed service pages (Web Development, Mobile Development, UI/UX Design, Cloud Solutions, Consulting, and Maintenance) with dynamic routing, comprehensive pricing plans, and interactive elements. Each service page includes technology stacks with Lucide React icons, detailed process workflows, and professional pricing tiers. The modern component-based architecture ensures maintainability and scalability, while the mobile-first responsive design guarantees an optimal experience on smartphones, tablets, and desktops. With features like SEO optimization, fast loading times, and accessibility compliance, NextApp serves as an excellent foundation for businesses looking to establish a strong digital presence in today's competitive market.
+---
 
 ## 🚀 Features
 
-### Core Features
-- **Modern Tech Stack**: Built with Next.js 15, React 19, and Tailwind CSS 4
-- **Responsive Design**: Mobile-first approach with beautiful responsive layouts
-- **Dynamic Routing**: Dynamic service pages with SEO-friendly URLs
-- **Component-Based Architecture**: Reusable components for maintainability
-- **Performance Optimized**: Fast loading with Next.js optimizations
+- **Next.js 15 App Router**: Modern file-based routing, layouts, and server/client component separation
+- **React 19**: Latest React features and performance
+- **Tailwind CSS 4**: Utility-first, fully responsive design
+- **JWT Authentication**: Secure login, signup, and role-based access
+- **Role-Based Dashboards**: Separate admin and user areas with custom layouts and redirects
+- **Dynamic Routing**: Blogs and services use dynamic `[slug]` and `[id]` routes
+- **Admin Dashboard**: Analytics widgets, tabbed interface, badges for unread items, and more
+- **User Dashboard**: Personalized user area with access to services, blogs, and contact
+- **Modern UI**: Pill-shaped tabs, animated loaders, sticky nav, and beautiful gradients
+- **SEO Optimized**: Semantic HTML, meta tags, and fast performance
+- **Accessibility**: Keyboard navigation and color contrast
 
-### Pages & Components
-- **Home Page**: Hero section with call-to-action buttons
-- **About Page**: Company story, mission, values, and team information
-- **Services Page**: Overview of all services with dynamic routing
-- **Dynamic Service Pages**: Detailed pages for each service with:
-  - Service descriptions and features
-  - Technology stack with Lucide React icons
-  - Process workflow
-  - Pricing plans
-  - Contact forms
-- **Contact Page**: Contact form with map integration
-- **Navigation**: Responsive navbar with mobile menu
-- **Footer**: Comprehensive footer with social links and company info
-
-### Services Offered
-1. **Web Development** - React, Next.js, Node.js, TypeScript
-2. **Mobile Development** - React Native, Flutter, Swift, Kotlin
-3. **UI/UX Design** - Figma, Sketch, Adobe XD, InVision
-4. **Cloud Solutions** - AWS, Azure, Google Cloud, Docker
-5. **Consulting** - Architecture review, performance audit, best practices
-6. **Maintenance** - 24/7 support, updates, monitoring
-
-## 🛠️ Technologies Used
-
-### Frontend
-- **Next.js 15** - React framework with App Router
-- **React 19** - Latest React with concurrent features
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **Lucide React** - Beautiful, customizable icons
-- **Geist Font** - Modern typography from Vercel
-
-### Development Tools
-- **Node.js** - JavaScript runtime
-- **npm** - Package manager
-- **ESLint** - Code linting
-- **PostCSS** - CSS processing
-
-## 📦 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd next-app
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+---
 
 ## 🏗️ Project Structure
 
 ```
-next-app/
-├── public/                 # Static assets
-│   ├── favicon.ico
-│   ├── next.svg
-│   └── vercel.svg
+softmint/
+├── public/                  # Static assets (images, icons, manifest)
 ├── src/
 │   └── app/
-│       ├── components/     # Reusable components
-│       │   ├── Navbar.js   # Navigation component
-│       │   └── Footer.js   # Footer component
-│       ├── about/          # About page
-│       │   └── page.js
-│       ├── contact/        # Contact page
-│       │   └── page.js
-│       ├── services/       # Services pages
-│       │   ├── page.js     # Main services page
-│       │   └── [slug]/     # Dynamic service pages
-│       │       └── page.js
-│       ├── globals.css     # Global styles
-│       ├── layout.js       # Root layout
-│       └── page.js         # Home page
-├── jsconfig.json           # JavaScript configuration
-├── next.config.mjs         # Next.js configuration
-├── package.json            # Dependencies and scripts
-├── postcss.config.mjs      # PostCSS configuration
-└── README.md              # This file
+│       ├── admin/           # Admin dashboard, blog/services/contact management
+│       ├── user/            # User dashboard, services, blog, contact
+│       ├── blog/            # Public blog pages
+│       ├── services/        # Public services pages (dynamic [slug])
+│       ├── components/      # Navbar, Footer, Loader, etc.
+│       ├── api/             # API routes for auth, blogs, users, etc.
+│       ├── globals.css      # Tailwind and global styles
+│       ├── layout.js        # Root layout (with conditional Navbar)
+│       ├── loading.js       # Global loading spinner
+│       └── page.js          # Home page
+├── lib/                     # Auth, database, and models
+├── package.json             # Dependencies and scripts
+├── next.config.mjs          # Next.js config
+├── postcss.config.mjs       # PostCSS config
+└── README.md                # This file
 ```
 
-## 🎨 Design System
+---
 
-### Colors
-- **Primary**: Blue gradient (`from-blue-600 to-purple-600`)
-- **Secondary**: Purple and green accents
-- **Background**: Light gray to white gradients
-- **Text**: Dark gray (`text-gray-900`) for headings, medium gray (`text-gray-600`) for body
+## 🔐 Authentication & Roles
+- **JWT-based** authentication with secure cookies
+- **Admin**: Access to `/admin` and all admin subpages (blog, services, contact, messages)
+- **User**: Access to `/user` and all user subpages (services, blog, contact)
+- **Public**: Access to home, about, blog, services, contact, etc.
+- **Role-based redirects**: Unauthenticated users are redirected to `/signin`, users to `/user`, admins to `/admin`
 
-### Typography
-- **Font Family**: Geist Sans (primary), Geist Mono (code)
-- **Headings**: Bold weights with responsive sizing
-- **Body**: Regular weight with good line height
+---
 
-### Components
-- **Cards**: Rounded corners with subtle shadows
-- **Buttons**: Gradient backgrounds with hover effects
-- **Icons**: Lucide React icons with consistent sizing
-- **Navigation**: Sticky navbar with smooth transitions
+## ✨ UI/UX Highlights
+- **Modern, responsive design** with Tailwind CSS
+- **Animated Loader**: Shown globally during page loads
+- **Conditional Navbar**: Hidden on admin/user dashboards, visible everywhere else
+- **Pill-shaped, scrollable tabs** in admin dashboard
+- **Badges** for unread messages/contacts
+- **Not-found page**: Role-aware redirect on "Go Home"
+- **Accessible**: Keyboard navigation, color contrast
 
-## 📱 Responsive Design
+---
 
-The application is fully responsive with breakpoints:
-- **Mobile**: `< 768px`
-- **Tablet**: `768px - 1024px`
-- **Desktop**: `> 1024px`
+## 📦 Getting Started
 
-### Mobile Features
-- Collapsible navigation menu
-- Touch-friendly buttons and interactions
-- Optimized layouts for small screens
-- Fast loading on mobile networks
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd softmint
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+4. **Open your browser**
+   Visit [http://localhost:3000](http://localhost:3000)
 
-## 🔧 Configuration
+---
 
-### Next.js Configuration (`next.config.mjs`)
-```javascript
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'randomuser.me',
-        port: '',
-        pathname: '/api/**',
-      },
-    ],
-  },
-};
-
-export default nextConfig;
-```
-
-### Tailwind Configuration
-- Custom color palette
-- Responsive breakpoints
-- Custom animations and transitions
-- Utility-first approach
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy automatically on every push
-
-### Other Platforms
-The app can be deployed to any platform that supports Next.js:
-- Netlify
-- AWS Amplify
-- DigitalOcean App Platform
-- Railway
-
-## 📈 Performance
-
-### Optimizations
-- **Image Optimization**: Next.js Image component
-- **Code Splitting**: Automatic route-based splitting
-- **Tree Shaking**: Unused code elimination
-- **Font Optimization**: Geist fonts with `next/font`
-- **Icon Optimization**: Lucide React tree-shaking
-
-### Lighthouse Scores
-- **Performance**: 95+
-- **Accessibility**: 100
-- **Best Practices**: 100
-- **SEO**: 100
-
-## 🧪 Development
-
-### Available Scripts
+## 🛠️ Scripts
 ```bash
 npm run dev      # Start development server
 npm run build    # Build for production
@@ -202,35 +94,40 @@ npm run start    # Start production server
 npm run lint     # Run ESLint
 ```
 
-### Code Quality
-- ESLint configuration for code quality
-- Consistent code formatting
-- Component-based architecture
-- Reusable utility functions
+---
 
-## 🤝 Contributing
+## 🧩 Main Pages & Routes
+- `/` — Home (public)
+- `/about`, `/contact`, `/services`, `/blog` — Public info pages
+- `/services/[slug]` — Dynamic public service detail pages
+- `/blog/[slug]` — Dynamic public blog pages
+- `/admin` — Admin dashboard (role-protected)
+- `/admin/blog`, `/admin/services`, `/admin/contact`, `/admin/messages` — Admin tabs
+- `/user` — User dashboard (role-protected)
+- `/user/services`, `/user/blog`, `/user/contact` — User tabs
+- `/signin`, `/signup`, `/forgot-password` — Auth pages
 
+---
+
+## 🎨 Design System
+- **Colors**: Blue/purple gradients, white backgrounds, dark text
+- **Typography**: Geist Sans/Mono, bold headings
+- **Components**: Cards, pill tabs, animated buttons, Lucide/React-icons
+- **Responsive**: Mobile-first, grid layouts, sticky nav
+
+---
+
+## 📝 Contributing
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add feature'`)
+4. Push to your branch (`git push origin feature/your-feature`)
 5. Open a Pull Request
 
+---
+
 ## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Next.js Team** - For the amazing framework
-- **Vercel** - For hosting and deployment
-- **Tailwind CSS** - For the utility-first CSS framework
-- **Lucide** - For the beautiful icons
-- **Geist Font** - For the modern typography
-
-## 📞 Support
-
-For support, email vaibhavgoswami@055gmail.com or create an issue in the repository.
+MIT License — see [LICENSE](LICENSE)
 
 ---
 

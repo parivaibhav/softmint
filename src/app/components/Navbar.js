@@ -11,13 +11,10 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    console.log('Navbar useEffect running');
     const token = Cookies.get('token');
-    console.log('Token from cookie:', token);
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log('Decoded token:', decoded);
         if (decoded && decoded.userId && decoded.username) {
           if (decoded.userType === 'admin' && window.location.pathname !== '/admin') {
             window.location.href = '/admin';
@@ -26,7 +23,6 @@ export default function Navbar() {
           }
         }
       } catch (e) {
-        console.log('JWT decode error:', e);
       }
     }
   }, []);

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Navbar from "../components/Navbar";
 
 const posts = [
   {
@@ -39,6 +40,7 @@ export default function BlogPage() {
     <>
       {/* Hero Section */}
       <section className="relative py-8 mb-16 bg-transparent rounded-3xl overflow-hidden shadow-none flex items-center justify-center">
+      <Navbar/>
         <div className="absolute inset-0 pointer-events-none"></div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-transparent bg-clip-text">

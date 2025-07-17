@@ -27,9 +27,9 @@ export async function POST(req) {
     const userObj = user.toObject();
     delete userObj.password;
 
-    // Issue JWT token with only email
+    // Issue JWT token with userType, username, and firstName
     const token = jwt.sign(
-      { email: user.email },
+      { email: user.email, userType: user.userType, username: user.username, firstName: user.firstName },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );

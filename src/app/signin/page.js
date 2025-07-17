@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Github } from 'lucide-react';
+import Navbar from '../components/Navbar';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -84,6 +85,7 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 flex items-center justify-center p-4">
+       <Navbar/>
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link href="/" className="inline-block mb-6 group">

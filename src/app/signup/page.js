@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Github, CheckCircle } from 'lucide-react';
+import Navbar from '../components/Navbar';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -136,6 +137,7 @@ export default function SignUp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 flex items-center justify-center p-4">
+      <Navbar/>
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">

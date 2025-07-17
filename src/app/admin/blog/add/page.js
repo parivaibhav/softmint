@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import AdminHeader from "../../components/AdminHeader";
+
 
 const WarningIcon = () => (
   <svg
@@ -122,7 +122,7 @@ export default function AddBlogPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <AdminHeader />
+ 
       <div className="flex-1 w-full max-w-2xl mx-auto py-8 px-2 sm:px-4 md:py-16">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           Add Blog

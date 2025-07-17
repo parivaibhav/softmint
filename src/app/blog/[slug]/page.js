@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "../../components/Navbar";
 
 // Mock blog posts data (should be replaced with real data or fetched from a CMS/database)
 const posts = [
@@ -43,6 +44,7 @@ export default function BlogPostPage({ params }) {
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-10 sm:py-16">
+       <Navbar/>
       {/* Hero Image */}
       <div className="relative w-full h-60 sm:h-80 md:h-96 rounded-3xl overflow-hidden shadow-lg mb-8">
         <Image

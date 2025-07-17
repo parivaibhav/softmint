@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Navbar from "../components/Navbar";
 
 export default function About() {
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+        <Navbar/>
         {/* Hero Section */}
         <section className="relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
@@ -11,7 +13,7 @@ export default function About() {
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                 About{" "}
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                 SoftMint
+                  SoftMint
                 </span>
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
@@ -38,7 +40,7 @@ export default function About() {
                     alt="Our Office"
                     width={400}
                     height={400}
-                    className="rounded-2xl object-cover w-full h-full"
+                    className="rounded-2xl  object-cover w-full h-full"
                   />
                 </div>
               </div>
@@ -49,15 +51,16 @@ export default function About() {
                   Our Story
                 </h2>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  NextApp was born from a vision to create web applications that
-                  are not only powerful and efficient but also beautiful and
-                  user-friendly. We believe that technology should enhance human
-                  experience, not complicate it.
+                  SoftMint was born from a vision to create web applications
+                  that are not only powerful and efficient but also beautiful
+                  and user-friendly. We believe that technology should enhance
+                  human experience, not complicate it.
                 </p>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                  Founded in 2024, our team of passionate developers and designers
-                  work together to build applications that leverage the latest
-                  technologies while maintaining simplicity and accessibility.
+                  Founded in 2024, our team of passionate developers and
+                  designers work together to build applications that leverage
+                  the latest technologies while maintaining simplicity and
+                  accessibility.
                 </p>
                 <div className="grid grid-cols-2 gap-6 mt-8">
                   <div className="text-center p-4 bg-gray-50 rounded-lg">
@@ -111,8 +114,8 @@ export default function About() {
                   Innovation
                 </h3>
                 <p className="text-gray-600">
-                  Constantly pushing boundaries and exploring new technologies to
-                  deliver cutting-edge solutions.
+                  Constantly pushing boundaries and exploring new technologies
+                  to deliver cutting-edge solutions.
                 </p>
               </div>
 
@@ -161,8 +164,8 @@ export default function About() {
                   Collaboration
                 </h3>
                 <p className="text-gray-600">
-                  Working together with clients and team members to achieve shared
-                  goals and create meaningful solutions.
+                  Working together with clients and team members to achieve
+                  shared goals and create meaningful solutions.
                 </p>
               </div>
             </div>
@@ -177,7 +180,7 @@ export default function About() {
                 Meet Our Team
               </h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                The talented individuals who make NextApp possible.
+                The talented individuals who make SoftMint possible.
               </p>
             </div>
 
@@ -185,19 +188,20 @@ export default function About() {
               <div className="text-center">
                 <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Image
-                    src="https://randomuser.me/api/portraits/men/34.jpg"
-                    alt="Jane Smith"
+                    src="https://res.cloudinary.com/drr7pngkv/image/upload/v1752754199/WhatsApp_Image_2025-03-03_at_17.24.07_8b6df072_op4aab.jpg"
+                    alt="Vaibhav Pari"
                     width={128}
                     height={128}
+                    className="rounded-full object-cover w-full h-full"
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  John Doe
+                  Vaibhav Pari
                 </h3>
                 <p className="text-blue-600 font-medium mb-2">Founder & CEO</p>
                 <p className="text-gray-600">
-                  Visionary leader with 10+ years of experience in web
-                  development.
+                  Visionary leader passionate about building innovative web
+                  solutions and driving digital transformation.
                 </p>
               </div>
 
@@ -208,15 +212,18 @@ export default function About() {
                     alt="Jane Smith"
                     width={128}
                     height={128}
+                    className="rounded-full object-cover w-full h-full"
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   Jane Smith
                 </h3>
-                <p className="text-purple-600 font-medium mb-2">Lead Designer</p>
+                <p className="text-purple-600 font-medium mb-2">
+                  Lead Designer
+                </p>
                 <p className="text-gray-600">
-                  Creative designer passionate about user experience and beautiful
-                  interfaces.
+                  Creative designer passionate about user experience and
+                  beautiful interfaces.
                 </p>
               </div>
 
@@ -227,6 +234,7 @@ export default function About() {
                     alt="Jane Smith"
                     width={128}
                     height={128}
+                    className="rounded-full object-cover w-full h-full"
                   />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">

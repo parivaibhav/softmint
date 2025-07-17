@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { Monitor, Smartphone, Palette, Cloud, Shield, Settings } from 'lucide-react';
+import Navbar from '../components/Navbar';
 
 export default function Services() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+       <Navbar/>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">

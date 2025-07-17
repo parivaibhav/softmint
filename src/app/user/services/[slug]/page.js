@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import { redirect } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { authenticateUser } from '../../lib/authenticateUser';
 import { use } from "react";
 import {
   SiReact,
@@ -593,12 +593,10 @@ export async function generateStaticParams() {
 }
 
 export default async function ServicePage({ params }) {
-  const user = authenticateUser('user');
+  const user = await authenticateUser('user');
   if (!user) redirect('/signin');
 
-  const resolvedParams =
-    typeof params.then === "function" ? use(params) : params;
-  const slug = resolvedParams.slug;
+  const slug = params.slug;
   const service = services[slug];
 
   if (!service) {

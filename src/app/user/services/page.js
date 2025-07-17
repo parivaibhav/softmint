@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { Monitor, Smartphone, Palette, Cloud, Shield, Settings } from 'lucide-react';
 import UserHeader from '../../components/UserHeader';
 
-export default function UserServicesPage() {
-  const user = authenticateUser('user');
+export default async function UserServicesPage() {
+  const user = await authenticateUser('user');
   if (!user) redirect('/signin');
 
   return (

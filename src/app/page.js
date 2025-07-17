@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Navbar from "./components/Navbar";
 import Link from "next/link";
 import { Zap, Smartphone, Palette, ArrowRight, Star, Users, Clock, MessageCircle, Send } from "lucide-react";
 import { 
@@ -15,6 +16,7 @@ import {
   SiGithub
 } from "react-icons/si";
 import { useState, useRef, useEffect } from "react";
+import ChatSupportWidget from "./components/ChatSupportWidget";
 
 export default function Home() {
   // Chat support state
@@ -42,8 +44,39 @@ export default function Home() {
     }, 1200);
   };
 
+  // FAQ data
+  const faqs = [
+    {
+      question: "What services does Softmint offer?",
+      answer:
+        "Softmint provides web development, mobile app development, UI/UX design, cloud solutions, IT consulting, and ongoing maintenance & support.",
+    },
+    {
+      question: "How do I get started with a project?",
+      answer:
+        "Simply contact us through our form or chat support. We'll discuss your requirements and guide you through the next steps.",
+    },
+    {
+      question: "What technologies do you use?",
+      answer:
+        "We use modern technologies like React, Next.js, Node.js, Flutter, Figma, AWS, and more to deliver robust solutions.",
+    },
+    {
+      question: "Do you provide post-launch support?",
+      answer:
+        "Yes! We offer ongoing maintenance, updates, and support to keep your applications running smoothly.",
+    },
+    {
+      question: "Can you help with UI/UX design only?",
+      answer:
+        "Absolutely. We can work on standalone UI/UX design projects or as part of a full development package.",
+    },
+  ];
+  const [openFaq, setOpenFaq] = useState(null);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+      <Navbar/>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -73,9 +106,6 @@ export default function Home() {
               From cutting-edge web applications to innovative mobile solutions, 
               we bring your vision to life with modern technologies and creative design.
             </p>
-
-         
-
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link href="/contact">
                 <button className="group bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-8 py-4 rounded-2xl font-semibold hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 flex items-center">
@@ -329,51 +359,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Chat Support Widget */}
-      <div>
-        {/* Floating Chat Button */}
-        <button
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-200 focus:outline-none"
-          onClick={() => setChatOpen((open) => !open)}
-          aria-label="Open chat support"
-        >
-          <MessageCircle className="w-7 h-7" />
-        </button>
-
-        {/* Chat Window */}
-        {chatOpen && (
-          <div className="fixed bottom-24 right-6 z-50 w-80 max-w-xs bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-fade-in">
-            {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-3 flex items-center justify-between">
-              <span className="font-semibold">Chat Support</span>
-              <button onClick={() => setChatOpen(false)} className="text-white hover:text-gray-200 text-xl font-bold focus:outline-none">×</button>
-            </div>
-            {/* Messages */}
-            <div className="flex-1 px-4 py-3 space-y-2 overflow-y-auto bg-white" style={{ maxHeight: 320 }}>
-              {messages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`rounded-2xl px-4 py-2 text-sm max-w-[75%] ${msg.from === "user" ? "bg-blue-100 text-blue-900" : "bg-gray-100 text-gray-800"}`}>{msg.text}</div>
-                </div>
-              ))}
-              <div ref={chatEndRef} />
-            </div>
-            {/* Input */}
-            <form onSubmit={handleSend} className="flex items-center border-t border-gray-100 bg-white px-2 py-2">
-              <input
-                type="text"
-                className="text-black flex-1 px-3 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm bg-gray-50"
-                placeholder="Type your message..."
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                autoFocus
-              />
-              <button type="submit" className="ml-2 p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors">
-                <Send className="w-5 h-5" />
+      {/* FAQ Section */}
+      <section className="relative z-20 max-w-3xl mx-auto my-16 px-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-gray-900">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-4">
+          {faqs.map((faq, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden transition-all duration-300"
+            >
+              <button
+                className="w-full flex justify-between items-center px-6 py-5 text-left focus:outline-none group"
+                onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                aria-expanded={openFaq === idx}
+              >
+                <span className="text-lg font-medium text-gray-900">
+                  {faq.question}
+                </span>
+                <span
+                  className={`ml-4 transform transition-transform duration-300 text-blue-600 ${openFaq === idx ? "rotate-180" : "rotate-0"}`}
+                >
+                  <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
               </button>
-            </form>
-          </div>
-        )}
-      </div>
+              <div
+                className={`px-6 pb-5 text-gray-700 text-base transition-all duration-300 ease-in-out ${
+                  openFaq === idx
+                    ? "max-h-40 opacity-100 pt-2"
+                    : "max-h-0 opacity-0 pt-0"
+                } overflow-hidden"`}
+                style={{
+                  transitionProperty: "max-height, opacity, padding-top",
+                }}
+              >
+                {faq.answer}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Chat Support Widget */}
+      <ChatSupportWidget />
     </div>
   );
 }
