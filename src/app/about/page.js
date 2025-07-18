@@ -208,7 +208,7 @@ export default function About() {
               <div className="text-center">
                 <div className="w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Image
-                    src="https://randomuser.me/api/portraits/men/34.jpg"
+                    src="https://randomuser.me/api/portraits/women/65.jpg" // changed image
                     alt="Jane Smith"
                     width={128}
                     height={128}
@@ -230,8 +230,8 @@ export default function About() {
               <div className="text-center">
                 <div className="w-32 h-32 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Image
-                    src="https://randomuser.me/api/portraits/men/34.jpg"
-                    alt="Jane Smith"
+                    src="https://randomuser.me/api/portraits/men/85.jpg" // changed image
+                    alt="Mike Johnson"
                     width={128}
                     height={128}
                     className="rounded-full object-cover w-full h-full"
