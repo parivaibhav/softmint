@@ -3,27 +3,32 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, Phone, Mail } from "lucide-react";
-import Cookies from 'js-cookie';
-import { jwtDecode } from 'jwt-decode';
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
     if (token) {
       try {
         const decoded = jwtDecode(token);
         if (decoded && decoded.userId && decoded.username) {
-          if (decoded.userType === 'admin' && window.location.pathname !== '/admin') {
-            window.location.href = '/admin';
-          } else if (decoded.userType === 'user' && window.location.pathname !== '/user') {
-            window.location.href = '/user';
+          if (
+            decoded.userType === "admin" &&
+            window.location.pathname !== "/admin"
+          ) {
+            window.location.href = "/admin";
+          } else if (
+            decoded.userType === "user" &&
+            window.location.pathname !== "/user"
+          ) {
+            window.location.href = "/user";
           }
         }
-      } catch (e) {
-      }
+      } catch (e) {}
     }
   }, []);
 
@@ -46,8 +51,6 @@ export default function Navbar() {
 
   return (
     <>
-  
-
       {/* Main Navbar */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -60,7 +63,10 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16 md:h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+              <Link
+                href="/"
+                className="flex items-center space-x-2 sm:space-x-3 group"
+              >
                 <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                   <span className="text-white font-bold text-sm sm:text-lg md:text-xl animate-logo-bounce">
                     S
@@ -70,7 +76,10 @@ export default function Navbar() {
                   <span className="text-base sm:text-lg md:text-xl font-bold text-gray-800">
                     SoftMint
                   </span>
-                  <span className="text-xs text-gray-500 -mt-1 hidden sm:block animate-pulse" style={{animationDelay: '1s'}}>
+                  <span
+                    className="text-xs text-gray-500 -mt-1 hidden sm:block animate-pulse"
+                    style={{ animationDelay: "1s" }}
+                  >
                     Innovation Hub
                   </span>
                 </div>
@@ -87,7 +96,7 @@ export default function Navbar() {
                   Home
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-            
+
                 <Link
                   href="/about"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
@@ -113,7 +122,14 @@ export default function Navbar() {
                   href="/blog"
                   className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
                 >
-                 Blog
+                  Blog
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+                <Link
+                  href="/career"
+                  className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 group"
+                >
+                  Carrer
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </div>
@@ -188,6 +204,14 @@ export default function Navbar() {
               >
                 Contact
               </Link>
+              <Link
+                href="/career"
+                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
+                onClick={closeMenu}
+              >
+                Career
+              </Link>
+          
 
               {/* Mobile CTA Buttons */}
               <div className="px-4 pt-4 space-y-3">

@@ -4,8 +4,8 @@ import Navbar from "../components/Navbar";
 export default function About() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
         <Navbar/>
+      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
         {/* Hero Section */}
         <section className="relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
@@ -208,7 +208,7 @@ export default function About() {
               <div className="text-center">
                 <div className="w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Image
-                    src="https://randomuser.me/api/portraits/women/65.jpg" // changed image
+                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww" // changed image
                     alt="Jane Smith"
                     width={128}
                     height={128}
@@ -230,7 +230,7 @@ export default function About() {
               <div className="text-center">
                 <div className="w-32 h-32 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Image
-                    src="https://randomuser.me/api/portraits/men/85.jpg" // changed image
+                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww" // changed image
                     alt="Mike Johnson"
                     width={128}
                     height={128}
