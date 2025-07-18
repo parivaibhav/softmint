@@ -49,7 +49,7 @@ import {
   FaChartLine,
   FaMagic,
 } from "react-icons/fa";
-import authenticateUser from '../../../../../../lib/authenticateUser'
+import authenticateUser from '../../../../../lib/authenticateUser';
 
 
 // Technology to icon mapping
