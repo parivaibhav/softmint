@@ -2,7 +2,6 @@ import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { redirect, notFound } from 'next/navigation';
 import Link from "next/link";
-import { authenticateUser } from '../../lib/authenticateUser';
 import { use } from "react";
 import {
   SiReact,
@@ -50,6 +49,7 @@ import {
   FaChartLine,
   FaMagic,
 } from "react-icons/fa";
+import authenticateUser from '../../../../../../lib/authenticateUser'
 
 
 // Technology to icon mapping
