@@ -1,6 +1,6 @@
-import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
-import { redirect, notFound } from 'next/navigation';
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import { use } from "react";
 import {
@@ -49,8 +49,7 @@ import {
   FaChartLine,
   FaMagic,
 } from "react-icons/fa";
-import authenticateUser from '../../../../../lib/authenticateUser';
-
+import { authenticateUser } from "../../../../../lib/authenticateUser";
 
 // Technology to icon mapping
 const technologyIcons = {
@@ -593,8 +592,8 @@ export async function generateStaticParams() {
 }
 
 export default async function ServicePage({ params }) {
-  const user = await authenticateUser('user');
-  if (!user) redirect('/signin');
+  const user = await authenticateUser("user");
+  if (!user) redirect("/signin");
 
   const slug = params.slug;
   const service = services[slug];
@@ -604,13 +603,11 @@ export default async function ServicePage({ params }) {
   }
 
   const cookieStore = cookies();
-  const token = cookieStore.get('token')?.value;
+  const token = cookieStore.get("token")?.value;
 
   if (!token) {
-    redirect('/signin');
+    redirect("/signin");
   }
-
-
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
