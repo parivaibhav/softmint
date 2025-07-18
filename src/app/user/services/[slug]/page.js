@@ -50,7 +50,7 @@ import {
   FaChartLine,
   FaMagic,
 } from "react-icons/fa";
-import { authenticateUser } from '../../lib/authenticateUser';
+
 
 // Technology to icon mapping
 const technologyIcons = {
