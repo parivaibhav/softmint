@@ -1,11 +1,13 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Loader from "./components/Loader";
+import ChatSupportWidget from "./components/ChatSupportWidget";
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -14,6 +16,24 @@ const geistSans = Geist({
 export default function RootLayout({ children }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        console.log('Decoded token:', decoded, 'Pathname:', pathname);
+        if (decoded && decoded.userType === 'admin' && !pathname.startsWith('/admin')) {
+          router.replace('/admin');
+        } else if (decoded && decoded.userType === 'user' && !pathname.startsWith('/user')) {
+          router.replace('/user');
+        }
+      } catch (e) {
+        console.log('JWT decode error:', e);
+      }
+    }
+  }, [pathname, router]);
 
   useEffect(() => {
     const handleStart = () => setLoading(true);
@@ -57,6 +77,10 @@ export default function RootLayout({ children }) {
         <main>
           {children}
         </main>
+        {/* Show Footer on all pages except /admin */}
+        {!(pathname && pathname.startsWith("/admin")) && <Footer />}
+        {/* Show ChatSupportWidget on all pages except /admin */}
+        {!(pathname && pathname.startsWith("/admin")) && <ChatSupportWidget />}
       </body>
     </html>
   );

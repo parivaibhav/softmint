@@ -67,7 +67,7 @@ export default async function UserServicesPage() {
                     Performance Optimization
                   </li>
                 </ul>
-                <Link href="/services/web-development" className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 block text-center">
+                <Link href="/user/services/web-development" className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 block text-center">
                   Learn More
                 </Link>
               </div>
@@ -102,7 +102,7 @@ export default async function UserServicesPage() {
                     Push Notifications
                   </li>
                 </ul>
-                <Link href="/services/mobile-development" className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-200 block text-center">
+                <Link href="/user/services/mobile-development" className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3 rounded-lg font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-200 block text-center">
                   Learn More
                 </Link>
               </div>
@@ -137,7 +137,7 @@ export default async function UserServicesPage() {
                     Prototyping
                   </li>
                 </ul>
-                <Link href="/services/ui-ux-design" className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-medium hover:from-green-700 hover:to-green-800 transition-all duration-200 block text-center">
+                <Link href="/user/services/ui-ux-design" className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-medium hover:from-green-700 hover:to-green-800 transition-all duration-200 block text-center">
                   Learn More
                 </Link>
               </div>
@@ -172,7 +172,7 @@ export default async function UserServicesPage() {
                     Monitoring & Security
                   </li>
                 </ul>
-                <Link href="/services/cloud-solutions" className="w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white py-3 rounded-lg font-medium hover:from-orange-700 hover:to-orange-800 transition-all duration-200 block text-center">
+                <Link href="/user/services/cloud-solutions" className="w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white py-3 rounded-lg font-medium hover:from-orange-700 hover:to-orange-800 transition-all duration-200 block text-center">
                   Learn More
                 </Link>
               </div>
@@ -207,7 +207,7 @@ export default async function UserServicesPage() {
                     Best Practices
                   </li>
                 </ul>
-                <Link href="/services/consulting" className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all duration-200 block text-center">
+                <Link href="/user/services/consulting" className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-medium hover:from-red-700 hover:to-red-800 transition-all duration-200 block text-center">
                   Learn More
                 </Link>
               </div>
@@ -242,7 +242,7 @@ export default async function UserServicesPage() {
                     Performance Monitoring
                   </li>
                 </ul>
-                <Link href="/services/maintenance" className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 block text-center">
+                <Link href="/user/services/maintenance" className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-indigo-800 transition-all duration-200 block text-center">
                   Learn More
                 </Link>
               </div>
@@ -259,7 +259,7 @@ export default async function UserServicesPage() {
             <p className="text-lg text-white mb-8">
               Contact us today to discuss your project and see how we can help you achieve your goals.
             </p>
-            <Link href="/contact" className="inline-block bg-white text-blue-600 font-semibold px-8 py-4 rounded-xl shadow-lg hover:bg-blue-50 transition-all duration-200">
+            <Link href="/user/contact" className="inline-block bg-white text-blue-600 font-semibold px-8 py-4 rounded-xl shadow-lg hover:bg-blue-50 transition-all duration-200">
               Contact Us
             </Link>
           </div>

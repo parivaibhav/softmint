@@ -399,6 +399,9 @@ export default function ServicePage({ params }) {
   // --- Add client-side login check and modal state ---
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Add state for pop-up message
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
 
   useEffect(() => {
     // Check for token in cookies
@@ -408,9 +411,11 @@ export default function ServicePage({ params }) {
 
   const handleGetStarted = () => {
     if (!isLoggedIn) {
-      setShowLoginModal(true);
+      setPopupMessage("Please sign in to continue.");
+      setShowPopup(true);
     } else {
-      // You can add logic here for logged-in users (e.g., redirect or action)
+      setPopupMessage("Thank you for your interest! We will contact you soon.");
+      setShowPopup(true);
     }
   };
 
@@ -596,6 +601,37 @@ export default function ServicePage({ params }) {
               >
                 Cancel
               </button>
+            </div>
+          </div>
+        )}
+        {/* Pop-up Message Modal */}
+        {showPopup && (
+          <div className="fixed left-1/2 top-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="bg-white rounded-xl p-8 shadow-2xl max-w-sm w-full text-center border border-gray-200">
+              <h3 className="text-2xl font-extrabold mb-6 text-gray-900">{popupMessage}</h3>
+              {popupMessage === "Please sign in to continue." ? (
+                <div className="flex justify-center gap-8 mt-6">
+                  <a
+                    href="/signin"
+                    className="text-blue-600 font-bold underline text-lg hover:text-purple-600 transition-all duration-200"
+                  >
+                    Go to Sign In
+                  </a>
+                  <button
+                    className="text-gray-600 font-bold underline text-lg hover:text-blue-600 transition-all duration-200 bg-transparent border-none p-0"
+                    onClick={() => setShowPopup(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+                  onClick={() => setShowPopup(false)}
+                >
+                  Close
+                </button>
+              )}
             </div>
           </div>
         )}

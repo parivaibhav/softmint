@@ -101,7 +101,7 @@ export default function UserHeader() {
                     SoftMint
                   </span>
                   <span className="text-xs text-gray-500 -mt-1 hidden sm:block animate-pulse" style={{animationDelay: '1s'}}>
-                    User Panel
+                    Innovation Hub
                   </span>
                 </div>
               </Link>

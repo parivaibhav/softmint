@@ -166,7 +166,13 @@ export default function UserContactForm() {
 
       // Success
       setSubmitStatus("success");
-      setFormData({ name: "", email: "", service: "", subject: "", message: "" });
+      setFormData({
+        name: "",
+        email: "",
+        service: "",
+        subject: "",
+        message: "",
+      });
       setTouched({});
       setErrors({});
 
@@ -254,30 +260,7 @@ export default function UserContactForm() {
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Service Dropdown */}
-                <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
-                    Service <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={`block w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-900 bg-gray-50 ${errors.service && touched.service ? 'border-red-400' : 'border-gray-200'}`}
-                  >
-                    <option value="">Select a service</option>
-                    <option value="Web Development">Web Development</option>
-                    <option value="Mobile App Development">Mobile App Development</option>
-                    <option value="UI/UX Design">UI/UX Design</option>
-                    <option value="Cloud Solutions">Cloud Solutions</option>
-                    <option value="IT Consulting">IT Consulting</option>
-                    <option value="Maintenance & Support">Maintenance & Support</option>
-                  </select>
-                  {errors.service && touched.service && (
-                    <p className="text-xs text-red-500 mt-1">{errors.service[0]}</p>
-                  )}
-                </div>
+
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -335,7 +318,43 @@ export default function UserContactForm() {
                     )}
                   </div>
                 </div>
-
+                <div>
+                  <label
+                    htmlFor="service"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Service <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`block w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-900 bg-gray-50 ${
+                      errors.service && touched.service
+                        ? "border-red-400"
+                        : "border-gray-200"
+                    }`}
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile App Development">
+                      Mobile App Development
+                    </option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Cloud Solutions">Cloud Solutions</option>
+                    <option value="IT Consulting">IT Consulting</option>
+                    <option value="Maintenance & Support">
+                      Maintenance & Support
+                    </option>
+                  </select>
+                  {errors.service && touched.service && (
+                    <p className="text-xs text-red-500 mt-1">
+                      {errors.service[0]}
+                    </p>
+                  )}
+                </div>
                 <div>
                   <label
                     htmlFor="subject"
