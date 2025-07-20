@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, use as usePromise, useRef } from "react";
+import { FaGooglePay, FaPhone, FaCreditCard } from "react-icons/fa6";
+import { SiPaytm } from "react-icons/si";
 
 
 function validateEmail(email) {
@@ -17,6 +19,32 @@ function validateExpiry(expiry) {
 function validateCVC(cvc) {
   return /^\d{3,4}$/.test(cvc);
 }
+
+// Service pricing data (should match the one in [slug]/page.js)
+const services = {
+  "web-development": {
+    pricing: {
+      basic: { price: "$5,000" },
+      standard: { price: "$10,000" },
+      premium: { price: "$20,000" },
+    },
+  },
+  "mobile-development": {
+    pricing: {
+      basic: { price: "$8,000" },
+      standard: { price: "$15,000" },
+      premium: { price: "$30,000" },
+    },
+  },
+  "ui-ux-design": {
+    pricing: {
+      basic: { price: "$3,000" },
+      standard: { price: "$6,000" },
+      premium: { price: "$12,000" },
+    },
+  },
+  // Add more services as needed
+};
 
 export default function PaymentPage({ params }) {
   const searchParams = useSearchParams();
@@ -40,6 +68,9 @@ export default function PaymentPage({ params }) {
   const [success, setSuccess] = useState(false);
   const [touched, setTouched] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [upiId, setUpiId] = useState("");
+  const [upiError, setUpiError] = useState("");
   const fieldRefs = {
     name: useRef(),
     email: useRef(),
@@ -62,17 +93,33 @@ export default function PaymentPage({ params }) {
     setTouched({ ...touched, [e.target.name]: true });
   };
 
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value);
+    setUpiId("");
+    setUpiError("");
+  };
+
+  const handleUpiChange = (e) => {
+    setUpiId(e.target.value);
+    setUpiError("");
+  };
+
   const validate = () => {
     const newErrors = {};
     if (!form.name.trim()) newErrors.name = "Name is required.";
     if (!form.email.trim()) newErrors.email = "Email is required.";
     else if (!validateEmail(form.email)) newErrors.email = "Enter a valid email.";
-    if (!form.card.trim()) newErrors.card = "Card number is required.";
-    else if (!validateCard(form.card)) newErrors.card = "Enter a valid 16-digit card number.";
-    if (!form.expiry.trim()) newErrors.expiry = "Expiry is required.";
-    else if (!validateExpiry(form.expiry)) newErrors.expiry = "Format MM/YY";
-    if (!form.cvc.trim()) newErrors.cvc = "CVC is required.";
-    else if (!validateCVC(form.cvc)) newErrors.cvc = "Enter 3 or 4 digits.";
+    if (paymentMethod === "card") {
+      if (!form.card.trim()) newErrors.card = "Card number is required.";
+      else if (!validateCard(form.card)) newErrors.card = "Enter a valid 16-digit card number.";
+      if (!form.expiry.trim()) newErrors.expiry = "Expiry is required.";
+      else if (!validateExpiry(form.expiry)) newErrors.expiry = "Format MM/YY";
+      if (!form.cvc.trim()) newErrors.cvc = "CVC is required.";
+      else if (!validateCVC(form.cvc)) newErrors.cvc = "Enter 3 or 4 digits.";
+    } else {
+      if (!upiId.trim()) newErrors.upiId = "UPI ID is required.";
+      else if (!/^[\w.-]+@[\w.-]+$/.test(upiId)) newErrors.upiId = "Enter a valid UPI ID.";
+    }
     return newErrors;
   };
 
@@ -101,13 +148,43 @@ export default function PaymentPage({ params }) {
     }, 1500);
   };
 
+  // Get the price for the selected plan and slug
+  let price = "";
+  if (slug && plan && services[slug] && services[slug].pricing[plan]) {
+    price = services[slug].pricing[plan].price;
+  }
+
+  // Payment method options with icons
+  const paymentOptions = [
+    {
+      value: "card",
+      label: "Card",
+      icon: <FaCreditCard className="w-6 h-6 text-blue-600" />,
+    },
+    {
+      value: "googlepay",
+      label: "Google Pay",
+      icon: <FaGooglePay className="w-6 h-6 text-green-600" />,
+    },
+    {
+      value: "phonepe",
+      label: "PhonePe",
+      icon: <FaPhone className="w-6 h-6 text-purple-600" />,
+    },
+    {
+      value: "paytm",
+      label: "Paytm",
+      icon: <SiPaytm className="w-6 h-6 text-blue-500" />,
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-white p-4 sm:p-8">
-      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-10 max-w-md w-full text-center border border-gray-200">
-        <h1 className="text-3xl font-bold mb-2 text-blue-700">Payment for {slug && slug.replace(/-/g, " ")}</h1>
+      <div className="bg-white rounded-3xl shadow-2xl p-6 sm:p-10 max-w-md w-full border border-gray-100">
+        <h1 className="text-3xl font-extrabold mb-2 text-blue-700 text-center tracking-tight">Payment for {slug && slug.replace(/-/g, " ")}</h1>
         {plan && (
-          <div className="mb-6">
-            <span className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium mb-2">
+          <div className="mb-6 text-center">
+            <span className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium mb-2 shadow-md">
               Plan: <span className="capitalize">{plan}</span>
             </span>
             <p className="text-gray-500 text-sm">Please fill in your payment details below.</p>
@@ -123,101 +200,124 @@ export default function PaymentPage({ params }) {
             </button>
           </div>
         ) : (
-          <form className="space-y-4 text-left" onSubmit={handleSubmit} autoComplete="off" noValidate>
-            <div>
-              <label className="block text-gray-700 font-medium mb-1" htmlFor="name">Name</label>
+          <form className="space-y-6 text-left" onSubmit={handleSubmit} autoComplete="off" noValidate>
+            {/* Price Field (disabled) */}
+            <div className="mb-2">
+              <label className="block text-gray-700 font-semibold mb-1" htmlFor="price">Amount</label>
               <input
                 type="text"
-                name="name"
-                id="name"
-                value={form.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                ref={fieldRefs.name}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.name && (touched.name || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-gray-50`}
-                placeholder="Your Name"
+                name="price"
+                id="price"
+                value={price}
+                disabled
+                className="w-full px-4 py-3 rounded-xl border border-blue-200 bg-blue-50 text-lg font-bold text-blue-700 cursor-not-allowed shadow-inner focus:outline-none"
               />
-              {errors.name && (touched.name || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.name}</p>}
             </div>
+            {/* Payment Method Selection */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1" htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={form.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                ref={fieldRefs.email}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.email && (touched.email || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-gray-50`}
-                placeholder="you@email.com"
-              />
-              {errors.email && (touched.email || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.email}</p>}
-            </div>
-            <div>
-              <label className="block text-gray-700 font-medium mb-1" htmlFor="card">Card Number</label>
-              <input
-                type="text"
-                name="card"
-                id="card"
-                value={form.card}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                required
-                maxLength={19}
-                pattern="[0-9 ]{13,19}"
-                ref={fieldRefs.card}
-                className={`w-full px-4 py-2 rounded-lg border ${errors.card && (touched.card || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-gray-50`}
-                placeholder="1234 5678 9012 3456"
-                inputMode="numeric"
-              />
-              {errors.card && (touched.card || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.card}</p>}
-            </div>
-            <div className="flex gap-4">
-              <div className="flex-1">
-                <label className="block text-gray-700 font-medium mb-1" htmlFor="expiry">Expiry</label>
-                <input
-                  type="text"
-                  name="expiry"
-                  id="expiry"
-                  value={form.expiry}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                  maxLength={5}
-                  pattern="(0[1-9]|1[0-2])\/([0-9]{2})"
-                  ref={fieldRefs.expiry}
-                  className={`w-full px-4 py-2 rounded-lg border ${errors.expiry && (touched.expiry || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-gray-50`}
-                  placeholder="MM/YY"
-                  inputMode="numeric"
-                />
-                {errors.expiry && (touched.expiry || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.expiry}</p>}
-              </div>
-              <div className="flex-1">
-                <label className="block text-gray-700 font-medium mb-1" htmlFor="cvc">CVC</label>
-                <input
-                  type="text"
-                  name="cvc"
-                  id="cvc"
-                  value={form.cvc}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                  maxLength={4}
-                  pattern="[0-9]{3,4}"
-                  ref={fieldRefs.cvc}
-                  className={`w-full px-4 py-2 rounded-lg border ${errors.cvc && (touched.cvc || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-gray-50`}
-                  placeholder="123"
-                  inputMode="numeric"
-                />
-                {errors.cvc && (touched.cvc || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.cvc}</p>}
+              <label className="block text-gray-700 font-semibold mb-2">Payment Method</label>
+              <div className="grid grid-cols-2 gap-3 mb-2">
+                {paymentOptions.map((option) => (
+                  <button
+                    type="button"
+                    key={option.value}
+                    className={`flex items-center gap-2 w-full px-4 py-3 rounded-xl border transition-all duration-200 shadow-sm font-medium text-base focus:outline-none
+                      ${paymentMethod === option.value
+                        ? "border-blue-600 bg-blue-50 ring-2 ring-blue-200"
+                        : "border-gray-200 bg-white hover:border-blue-400 hover:bg-blue-50"}
+                    `}
+                    onClick={() => setPaymentMethod(option.value)}
+                  >
+                    {option.icon}
+                    <span>{option.label}</span>
+                  </button>
+                ))}
               </div>
             </div>
+            {/* UPI ID Field (for UPI methods) */}
+            {paymentMethod !== "card" && (
+              <div className="rounded-xl bg-blue-50 p-4 border border-blue-100 shadow-inner">
+                <label className="block text-gray-700 font-semibold mb-1" htmlFor="upiId">UPI ID</label>
+                <input
+                  type="text"
+                  name="upiId"
+                  id="upiId"
+                  value={upiId}
+                  onChange={handleUpiChange}
+                  className={`w-full px-4 py-3 rounded-lg border ${upiError || (errors.upiId && (touched.upiId || submitted)) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-white`}
+                  placeholder="yourname@bank"
+                  required
+                />
+                {(upiError || (errors.upiId && (touched.upiId || submitted))) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{upiError || errors.upiId}</p>}
+              </div>
+            )}
+            {/* Card Fields (only if card is selected) */}
+            {paymentMethod === "card" && (
+              <div className="rounded-xl bg-blue-50 p-4 border border-blue-100 shadow-inner space-y-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold mb-1" htmlFor="card">Card Number</label>
+                  <input
+                    type="text"
+                    name="card"
+                    id="card"
+                    value={form.card}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    required={paymentMethod === "card"}
+                    maxLength={19}
+                    pattern="[0-9 ]{13,19}"
+                    ref={fieldRefs.card}
+                    className={`w-full px-4 py-3 rounded-lg border ${errors.card && (touched.card || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-white`}
+                    placeholder="1234 5678 9012 3456"
+                    inputMode="numeric"
+                  />
+                  {errors.card && (touched.card || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.card}</p>}
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label className="block text-gray-700 font-semibold mb-1" htmlFor="expiry">Expiry</label>
+                    <input
+                      type="text"
+                      name="expiry"
+                      id="expiry"
+                      value={form.expiry}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required={paymentMethod === "card"}
+                      maxLength={5}
+                      pattern="(0[1-9]|1[0-2])\/([0-9]{2})"
+                      ref={fieldRefs.expiry}
+                      className={`w-full px-4 py-3 rounded-lg border ${errors.expiry && (touched.expiry || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-white`}
+                      placeholder="MM/YY"
+                      inputMode="numeric"
+                    />
+                    {errors.expiry && (touched.expiry || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.expiry}</p>}
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-gray-700 font-semibold mb-1" htmlFor="cvc">CVC</label>
+                    <input
+                      type="text"
+                      name="cvc"
+                      id="cvc"
+                      value={form.cvc}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      required={paymentMethod === "card"}
+                      maxLength={4}
+                      pattern="[0-9]{3,4}"
+                      ref={fieldRefs.cvc}
+                      className={`w-full px-4 py-3 rounded-lg border ${errors.cvc && (touched.cvc || submitted) ? 'border-red-400' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:outline-none text-base bg-white`}
+                      placeholder="123"
+                      inputMode="numeric"
+                    />
+                    {errors.cvc && (touched.cvc || submitted) && <p className="text-red-500 text-xs mt-1 transition-opacity duration-300 ease-in opacity-100 animate-fade-in">{errors.cvc}</p>}
+                  </div>
+                </div>
+              </div>
+            )}
             <button
               type="submit"
-              className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-60"
+              className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 disabled:opacity-60 shadow-lg"
               disabled={submitting}
             >
               {submitting ? 'Processing...' : 'Pay Now'}

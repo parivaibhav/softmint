@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, UserCircle, ChevronDown, LogOut, Settings, Home } from "lucide-react";
 import jwt from 'jsonwebtoken';
+import { Fragment, useState as useModalState } from "react";
 
 export default function UserHeader() {
   const [user, setUser] = useState(null);
@@ -12,7 +13,7 @@ export default function UserHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [showLogoutModal, setShowLogoutModal] = useModalState(false);
 
 
   useEffect(() => {
@@ -71,6 +72,16 @@ export default function UserHeader() {
     } catch (err) {
       window.location.href = '/signin';
     }
+  };
+
+  // Confirm and logout (now opens modal)
+  const confirmAndLogout = () => {
+    setShowLogoutModal(true);
+  };
+  const cancelLogout = () => setShowLogoutModal(false);
+  const confirmLogout = () => {
+    setShowLogoutModal(false);
+    handleLogout();
   };
 
   if (loading) return null;
@@ -180,7 +191,7 @@ export default function UserHeader() {
                       className="flex items-center w-full px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                       onClick={() => {
                         setDropdownOpen(false);
-                        handleLogout();
+                        confirmAndLogout();
                       }}
                     >
                       <LogOut className="w-5 h-5 mr-2 text-red-500" />
@@ -266,19 +277,47 @@ export default function UserHeader() {
                   </button>
                 </Link>
                 <button
-                  className="w-full px-4 py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 hover:bg-gray-50 rounded-xl"
+                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-gray-50/50 rounded-xl font-medium transition-all duration-200 mx-2"
                   onClick={() => {
                     closeMenu();
-                    handleLogout();
+                    confirmAndLogout();
                   }}
                 >
-                  Log out
+                  <span className="flex items-center"><LogOut className="w-5 h-5 mr-2 text-red-500" /> Log out</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
       </nav>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-xs w-full text-center animate-fade-in">
+            <div className="mb-4">
+              <LogOut className="w-12 h-12 mx-auto text-red-500 mb-2" />
+              <h2 className="text-xl font-bold mb-2 text-gray-900">Log out?</h2>
+              <p className="text-gray-600">Are you sure you want to log out?</p>
+            </div>
+            <div className="flex gap-4 mt-6 justify-center">
+              <button
+                className="px-5 py-2 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition"
+                onClick={cancelLogout}
+                autoFocus
+              >
+                Cancel
+              </button>
+              <button
+                className="px-5 py-2 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold shadow hover:from-red-600 hover:to-pink-600 transition"
+                onClick={confirmLogout}
+              >
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Spacer for fixed navbar */}
       <div className="h-16 md:h-20"></div>
     </>

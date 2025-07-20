@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { Home, AlertTriangle } from "lucide-react";
 
 export default function NotFound() {
   const [loading, setLoading] = useState(false);
@@ -28,27 +27,32 @@ export default function NotFound() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-white px-4">
-      <div className="max-w-md w-full text-center bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-10 relative overflow-hidden">
-        <div className="flex flex-col items-center mb-6">
-          <span className="inline-block animate-bounce mb-2">
-            <AlertTriangle className="w-14 h-14 text-pink-500 " />
-          </span>
-          <h1 className="text-8xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2 drop-shadow-lg select-none">404</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-white text-center">
+      {/* 404 Number with Animation */}
+      <div className="mb-8">
+        <div className="relative inline-block">
+          <h1 className="text-9xl md:text-[12rem] font-black text-gray-900 animate-pulse select-none">
+            404
+          </h1>
+          <div className="absolute inset-0 text-gray-300 animate-pulse opacity-50 blur-sm">
+            404
+          </div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h2>
-        <p className="text-gray-600 mb-8">Sorry, the page you are looking for does not exist or has been moved.</p>
-        <button
-          onClick={handleGoHome}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 text-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-          disabled={loading}
-        >
-          <Home className="w-6 h-6" />
-          {loading ? "Redirecting..." : "Go Home"}
-        </button>
-        <div className="absolute top-0 left-0 w-24 h-24 bg-blue-100 rounded-full opacity-30 -z-10 animate-float"></div>
-        <div className="absolute bottom-0 right-0 w-20 h-20 bg-purple-100 rounded-full opacity-30 -z-10 animate-float-reverse"></div>
       </div>
+      {/* Message */}
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Oops! Page Not Found
+      </h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
+        The page you're looking for seems to have wandered off into the digital void. Don't worry, we'll help you find your way back!
+      </p>
+      <button
+        onClick={handleGoHome}
+        disabled={loading}
+        className="inline-flex items-center gap-3 bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      >
+        {loading ? "Redirecting..." : "Go Home"}
+      </button>
     </div>
   );
 } 

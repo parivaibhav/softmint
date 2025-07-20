@@ -153,35 +153,53 @@ export default function UserContactForm() {
       message: true,
     });
 
+    // Check validation first
     if (!validateForm()) {
-      return;
+      return; // Don't proceed if validation fails
     }
 
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Success
-      setSubmitStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        service: "",
-        subject: "",
-        message: "",
+      // Real API call using POST method
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      setTouched({});
-      setErrors({});
 
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
+      if (response.ok) {
+        // Success
+        setSubmitStatus("success");
+        
+        // Clear form fields only on success
+        setFormData({
+          name: "",
+          email: "",
+          service: "",
+          subject: "",
+          message: "",
+        });
+        setTouched({});
+        setErrors({});
+
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus(null);
+        }, 5000);
+      } else {
+        // Handle API error
+        const errorData = await response.json();
+        setSubmitStatus("error");
+        console.error('Contact form error:', errorData);
+      }
     } catch (error) {
+      // Handle network error
       setSubmitStatus("error");
+      console.error('Contact form error:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -416,24 +434,9 @@ export default function UserContactForm() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-lg font-medium transition-all duration-200 transform bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 hover:scale-105 shadow-lg disabled:opacity-60"
-                  disabled={
-                    isSubmitting ||
-                    Object.keys(formData).some(
-                      (field) =>
-                        !formData[field].trim() ||
-                        validateField(field, formData[field]).length > 0
-                    )
-                  }
+                  className="w-full mt-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg"
                 >
-                  {isSubmitting ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Sending...</span>
-                    </div>
-                  ) : (
-                    "Send Message"
-                  )}
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
