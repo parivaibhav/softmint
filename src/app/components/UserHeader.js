@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, UserCircle, ChevronDown, LogOut, Settings, Home } from "lucide-react";
+import { PiChatTeardropTextFill } from "react-icons/pi";
 import jwt from 'jsonwebtoken';
 import { Fragment, useState as useModalState } from "react";
+import ChatUI from "./ChatUI"; // Added import for ChatUI
 
 export default function UserHeader() {
   const [user, setUser] = useState(null);
@@ -14,6 +16,7 @@ export default function UserHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [showLogoutModal, setShowLogoutModal] = useModalState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
 
   useEffect(() => {
@@ -163,6 +166,16 @@ export default function UserHeader() {
 
             {/* User Dropdown */}
             <div className="hidden lg:flex items-center space-x-4">
+              {/* Chat Icon Button */}
+              <button
+                type="button"
+                onClick={() => setChatOpen(true)}
+                className="flex items-center justify-center p-2 rounded-full hover:bg-blue-50 transition-colors gap-2"
+                aria-label="Open chat"
+              >
+                <PiChatTeardropTextFill className="w-7 h-7 text-blue-600" />
+                <span className="text-blue-700 font-medium text-sm hidden xl:inline">Chats</span>
+              </button>
               <div className="relative" ref={dropdownRef}>
                 <button
                   className="flex items-center space-x-2 focus:outline-none group"
@@ -314,6 +327,29 @@ export default function UserHeader() {
               >
                 Log out
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Chat Sidebar Drawer */}
+      {chatOpen && (
+        <div className="fixed inset-0 z-[99999] flex">
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setChatOpen(false)}
+          />
+          {/* Sidebar */}
+          <div className="ml-auto w-full max-w-md h-full bg-white shadow-2xl flex flex-col animate-slide-in-right relative">
+            <button
+              className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-gray-100 text-gray-600"
+              onClick={() => setChatOpen(false)}
+              aria-label="Close chat"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="flex-1 flex flex-col pt-12">
+              <ChatUI />
             </div>
           </div>
         </div>

@@ -215,7 +215,7 @@ export default function AddBlogPage() {
             <button
               type="button"
               className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition w-full sm:w-auto"
-              onClick={() => router.push("/admin/blog")}
+              onClick={() => router.push("/admin/")}
               disabled={loading}
             >
               Cancel
